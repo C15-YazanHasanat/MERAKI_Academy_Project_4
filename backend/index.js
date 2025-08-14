@@ -16,6 +16,7 @@ const categoryRouter=require("./routes/CategoryRout")
 const rolesRouter = require("./routes/roleRoute");
 const usersRouter = require("./routes/usreRoute");
 const cartRouter=require("./routes/cartRoute")
+const orderRouter=require("./routes/orderRoute")
   
 // router middleware
 
@@ -24,6 +25,7 @@ app.use("/category",categoryRouter)
 app.use("/roles", rolesRouter);
 app.use("/users", usersRouter);
 app.use("/carts", cartRouter);
+app.use("/order",orderRouter)
 
 
 

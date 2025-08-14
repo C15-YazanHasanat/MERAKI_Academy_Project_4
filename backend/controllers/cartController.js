@@ -22,7 +22,7 @@ const addToCart = (req, res) => {
     .then((product) => {
       if (!product) return res.status(404).json({ message: "Product not found" });
 
-      return Cart.findOne({ user: userId }).then((cart) => {
+      return CartModel.findOne({ user: userId }).then((cart) => {
         if (!cart) {
           const newCart = new Cart({
             user: userId,
