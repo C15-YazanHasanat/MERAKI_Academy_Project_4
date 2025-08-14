@@ -2,14 +2,16 @@ const express = require("express");
 const {
   getCategories,
   createCategory,
-}=require("../controllers/CategoryController");
-const { model } = require("mongoose");
+  getCategoryById,
+  updateCategory,deleteCategory
+} = require("../controllers/CategoryController");
 
+const categoryRouter = express.Router();
 
-  const categoryRouter=express.Router()
+categoryRouter.post("/", createCategory);
+categoryRouter.get("/", getCategories);
+categoryRouter.get("/:id", getCategoryById);
+categoryRouter.put("/:id", updateCategory);
+categoryRouter.delete("/:id", deleteCategory);
 
-  categoryRouter.post("/",createCategory)
-  categoryRouter.get("/",getCategories)
-
-
-  module.exports=categoryRouter
+module.exports = categoryRouter;
