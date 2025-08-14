@@ -14,6 +14,7 @@ app.use(express.json());
 const productRouter=require("./routes/productRoute")
 const categoryRouter=require("./routes/CategoryRout")
 const rolesRouter = require("./routes/roleRoute");
+const usersRouter = require("./routes/usreRoute");
 
   
 // router middleware
@@ -21,6 +22,7 @@ const rolesRouter = require("./routes/roleRoute");
 app.use("/products",productRouter)
 app.use("/category",categoryRouter)
 app.use("/roles", rolesRouter);
+app.use("/users", usersRouter);
 
 
 // Handles any other endpoints [unassigned - endpoints]
