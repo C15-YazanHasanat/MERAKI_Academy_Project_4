@@ -3,10 +3,14 @@ const {
   getProducts,
   createProduct,
   getProductById,
-  updateProduct,deleteProduct 
+  updateProduct,
+  deleteProduct,
+  getProductsByCategory,
 } = require("../controllers/ProductController");
 
 const productRouter = express.Router();
+
+productRouter.get("/category/:categoryId", getProductsByCategory);
 
 productRouter.post("/", createProduct);
 productRouter.get("/", getProducts);

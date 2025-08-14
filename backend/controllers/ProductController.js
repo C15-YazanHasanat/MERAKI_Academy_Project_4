@@ -5,12 +5,20 @@ const productModel = require("../models/ProductSchema");
 const getProducts = (req, res) => {
   productModel
     .find()
+    .populate("category", "name-_id")
     .then((product) => {
-      res.status(200).json({
-        success: true,
-        message: `All the articles`,
-        product: product,
-      });
+      if (product.length>0) {
+        res.status(200).json({
+          success: true,
+          message: `All the products`,
+          product: product,
+        });
+      }else{
+        res.status(404).json({
+          success: false,
+          message: `No Products Yet`,
+        });
+      }
     })
     .catch((err) => {
       res.status(500).json({
@@ -23,8 +31,9 @@ const getProducts = (req, res) => {
 // !!========get  product ById=======
 
 const getProductById = (req, res) => {
-  productModel.findById(req.params.id)
-    .populate("category", "name")
+  productModel
+    .findById(req.params.id)
+    .populate("category", "name-_id")
     .then((product) => {
       if (!product)
         return res.status(404).json({ message: "Product not found" });
@@ -32,6 +41,25 @@ const getProductById = (req, res) => {
     })
     .catch((error) => res.status(500).json({ message: error.message }));
 };
+
+// !!========get  product By Category=======
+
+const getProductsByCategory = (req, res) => {
+  const { categoryId } = req.params;
+
+  productModel.find({ category: categoryId })
+    .populate("category", "name")
+    .then((products) => {
+      if (!products.length) {
+        return res
+          .status(404)
+          .json({ message: "No products found for this category" });
+      }
+      res.json(products);
+    })
+    .catch((error) => res.status(500).json({ message: error.message }));
+};
+
 // !!========Create Product=======
 
 const createProduct = (req, res) => {
@@ -68,7 +96,8 @@ const createProduct = (req, res) => {
 // !!========update Product=======
 
 const updateProduct = (req, res) => {
-  productModel.findById(req.params.id)
+  productModel
+    .findById(req.params.id)
     .then((product) => {
       if (!product)
         return res.status(404).json({ message: "Product not found" });
@@ -93,20 +122,21 @@ const updateProduct = (req, res) => {
 // !!========delete Product=======
 
 const deleteProduct = (req, res) => {
-  productModel.findById(req.params.id)
+  productModel
+    .findById(req.params.id)
     .then((product) => {
-      if (!product) return res.status(404).json({ message: "Product not found" });
+      if (!product)
+        return res.status(404).json({ message: "Product not found" });
       return product.deleteOne();
     })
     .then(() => res.json({ message: "Product removed" }))
     .catch((error) => res.status(500).json({ message: error.message }));
 };
 
-
-
 module.exports = {
   getProducts,
   createProduct,
   getProductById,
-  updateProduct,deleteProduct
+  updateProduct,
+  deleteProduct,getProductsByCategory
 };
