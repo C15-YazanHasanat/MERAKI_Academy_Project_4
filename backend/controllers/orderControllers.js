@@ -1,5 +1,5 @@
 const OrderModel = require("../models/orderSchema");
-const ProductModel = require("../models/ProductSchema");
+
 
 // Create new order
 const createOrder = (req, res) => {
@@ -11,7 +11,7 @@ const createOrder = (req, res) => {
 
   const order = new OrderModel({
     user: userId,
-    products, // products تحتوي على { product, quantity, price } فقط
+    products, 
     address,
     paymentMethod,
   });

@@ -7,5 +7,5 @@ const { createNewRole } = require("../controllers/roleController");
 const rolesRouter = express.Router();
 
 rolesRouter.post("/", createNewRole);
-
+//path==>  http://localhost:5000/roles
 module.exports = rolesRouter;

@@ -24,7 +24,7 @@ const addToCart = (req, res) => {
 
       return CartModel.findOne({ user: userId }).then((cart) => {
         if (!cart) {
-          const newCart = new Cart({
+          const newCart = new CartModel({
             user: userId,
             products: [{ product: productId, quantity }],
           });

@@ -15,14 +15,17 @@ cartRouter.use(authentication);
 
 
 cartRouter.get("/", getCart);
-
+//path==>http://localhost:5000/carts
 
 cartRouter.post("/add", addToCart);
+//path==>http://localhost:5000/carts/add
 
 
 cartRouter.put("/update", updateCartItem);
+//path==>http://localhost:5000/carts/update
 
 
 cartRouter.delete("/remove", removeFromCart);
+//path==>http://localhost:5000/carts/remove
 
 module.exports = cartRouter;
