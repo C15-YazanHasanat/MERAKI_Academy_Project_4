@@ -84,10 +84,21 @@ const removeFromCart = (req, res) => {
       cart.products = cart.products.filter(
         (item) => item.product.toString() !== productId
       );
-      return cart.save();
+
+      // إذا صار الكارت فاضي نحذفه
+      if (cart.products.length === 0) {
+        return cart.deleteOne().then(() => 
+          res.json({ message: "Cart is now empty and removed" })
+        );
+      }
+
+      return cart.save().then((cart) =>
+        cart.populate("products.product", "name price images")
+      );
     })
-    .then((cart) => cart.populate("products.product", "name price images"))
-    .then((cart) => res.json({ message: "Item removed", cart }))
+    .then((cart) => {
+      if (cart) res.json({ message: "Item removed", cart });
+    })
     .catch((err) => res.status(500).json({ message: err.message }));
 };
 

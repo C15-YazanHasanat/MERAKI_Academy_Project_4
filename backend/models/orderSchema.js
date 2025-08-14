@@ -10,7 +10,6 @@ const orderSchema = new mongoose.Schema(
         price: { type: Number, required: true },
       }
     ],
-    totalPrice: { type: Number, required: true },
     status: { type: String, default: "Pending" },
     address: { type: String, required: true },
     paymentMethod: { type: String, required: true },
