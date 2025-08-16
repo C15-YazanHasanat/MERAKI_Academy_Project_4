@@ -26,16 +26,16 @@ header a {
   font-size: 17px;
 }
 
-.top-links a,
-.top-actions a {
+.top-links span,
+.top-actions span {
   margin: 0 0.8rem;
   color: #fff;
+  cursor: pointer;
   transition: 0.3s;
 }
-
-.top-links a:hover,
-.top-actions a:hover {
-  text-decoration: underline;
+.top-links span:hover,
+.top-actions span:hover {
+  color: #ccc;
 }
 
 
@@ -51,12 +51,16 @@ header a {
   font-size: 2rem;
   font-weight: bold;
   color: #d82323;
-  cursor: grab;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .search-box {
   display: flex;
-  border: 1px solid #ccc;
+  border: 10px solid #ccc; 
+  border-radius: 8px; 
+  background-color: #f5f5f5; 
+  overflow: hidden;
 }
 
 .search-box input {
@@ -64,6 +68,8 @@ header a {
   border: none;
   outline: none;
   width: 250px;
+  width: 500px;
+
 }
 
 .search-box button {
@@ -76,11 +82,10 @@ header a {
 .contact {
   font-size: 0.9rem;
   color: #333;
+  font-size: 18px;
 }
-.contact:hover{
-    color: #d82323;
-}
-/* Category bar */
+
+
 .category-bar {
   display: flex;
   justify-content: center;
@@ -89,6 +94,8 @@ header a {
   font-weight: bold;
   border-bottom: 1px solid #e5e7eb;
   background: #fff;
+  font-size: 18px;
+  
 }
 
 .category-bar a {
@@ -98,4 +105,16 @@ header a {
 
 .category-bar a:hover {
   color: #d82323;
+  
+}
+
+.chat-us {
+ cursor: pointer;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.chat-us:hover{
+    color: #d82323;
 }

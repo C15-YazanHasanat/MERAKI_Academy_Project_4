@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaSignInAlt, FaShoppingCart, FaSearch } from "react-icons/fa";
-import { FaMessage } from "react-icons/fa6";
+import { FaComment } from "react-icons/fa6";
 import "./Navbar.css";
 import { useSelector } from "react-redux";
 const Navbar = () => {
@@ -12,21 +12,22 @@ const Navbar = () => {
       {/* Top bar */}
       <div className="top-bar">
         <div className="top-links">
-          <Link to="/">Home</Link>
-          <Link to="/about">About Us</Link>
-          <Link to="/contact">Contact Us</Link>
-          <Link to="/blog">Blog</Link>
+          <span onClick={() => navigate("/")}>Home</span>
+          <span onClick={() => navigate("/about")}>About Us</span>
+          <span onClick={() => navigate("/contact")}>Contact Us</span>
+          <span onClick={() => navigate("/blog")}>Blog</span>
         </div>
+
         <div className="top-actions">
-          <Link to="/account">
+          <span onClick={() => navigate("/account")}>
             <FaUser /> My Account
-          </Link>
-          <Link to="/login">
+          </span>
+          <span onClick={() => navigate("/login")}>
             <FaSignInAlt /> Login
-          </Link>
-          <Link to="/cart">
+          </span>
+          <span onClick={() => navigate("/cart")}>
             <FaShoppingCart /> Cart
-          </Link>
+          </span>
         </div>
       </div>
 
@@ -42,7 +43,15 @@ const Navbar = () => {
           </button>
         </div>
         <div className="contact">
-          QUESTIONS? Chat US <FaMessage />
+          QUESTIONS?{" "}
+          <span
+            className="chat-us"
+            onClick={() => {
+              navigate("/chatpage");
+            }}
+          >
+            Chat US <FaComment />
+          </span>
         </div>
       </div>
 
