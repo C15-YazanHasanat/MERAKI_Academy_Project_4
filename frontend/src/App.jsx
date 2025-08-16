@@ -29,12 +29,12 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="*" element={<h2>404 Not Found</h2>} />
         <Route path="/chatpage" element={<ChatPage/>}/>
         <Route path="/account" element={<Account/>}/>
         <Route path="/about" element={<AboutUS/>}/>
         <Route path="/blog" element={<Blog/>}/>
         <Route path="/contact" element={<ContactUs/>}/>
+         <Route path="*" element={<h2>404 Not Found</h2>} />
       </Routes>
     </div>
   );
