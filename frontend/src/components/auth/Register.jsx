@@ -49,7 +49,7 @@ const Register = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh",
+        minHeight: "110vh",
         backgroundColor: "#f5f5f5",
       }}
     >
