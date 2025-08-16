@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { TextField, Button, Paper, Typography, Box } from "@mui/material";
+import './Register.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -29,7 +30,6 @@ const Register = () => {
         password,
       })
       .then((res) => {
-        console.log("Registered:", res.data);
         setStatus(true);
         setMessage(res.data.message);
         
@@ -45,6 +45,7 @@ const Register = () => {
 
   return (
     <Box
+    className="fade-in"
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -113,14 +114,9 @@ const Register = () => {
           </Button>
         </form>
 
-        {message && (
-          <Typography
-            align="center"
-            sx={{ marginTop: 2, color: status ? "green" : "red" }}
-          >
-            {message}
-          </Typography>
-        )}
+        {status
+          ? message && <div className="SuccessMessage">{message}</div>
+          : message && <div className="ErrorMessage">{message}</div>}
 
         <Typography
           variant="body2"

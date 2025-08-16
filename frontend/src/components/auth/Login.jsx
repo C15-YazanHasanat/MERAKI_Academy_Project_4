@@ -1,5 +1,6 @@
 import { setLogin, setUserId } from "../redux/authSlice";
 import React, { useState } from "react";
+import './Register.css';
 
 import { TextField, Button, Paper, Typography, Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +30,8 @@ const login = async (e) => {
         navigate("/");
       } else throw Error;
     } catch (error) {
+        console.log(error);
+        
       if (error.response && error.response.data) {
         return setMessage(error.response.data.message);
       }
@@ -37,15 +40,17 @@ const login = async (e) => {
   };
   return (
     <Box
+    className="fade-in"
+
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "110vh",
+        minHeight: "80vh",
         backgroundColor: "#f5f5f5",
       }}
     >
-      <Paper elevation={3} sx={{ padding: 4, width: 400 }}>
+      <Paper elevation={10} sx={{ padding: 4, width: 400 }}>
         <Typography variant="h5" align="center" gutterBottom>
           Login
         </Typography>
@@ -57,6 +62,7 @@ const login = async (e) => {
             margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            slotProps={{ htmlInput: { 'data-testid': '…' } }}
           />
           <TextField
             label="Password"
@@ -76,14 +82,9 @@ const login = async (e) => {
           </Button>
         </form>
 
-        {message && (
-          <Typography
-            align="center"
-            sx={{ marginTop: 2, color: status ? "green" : "red" }}
-          >
-            {message}
-          </Typography>
-        )}
+        {status
+          ? message && <div className="SuccessMessage">{message}</div>
+          : message && <div className="ErrorMessage">{message}</div>}
 
         <Typography
           variant="body2"

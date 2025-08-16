@@ -1,0 +1,62 @@
+.home-slider-compact {
+  position: relative;
+}
+
+.slide-item {
+  position: relative;
+}
+
+.slide-item img {
+  width: 100%;
+  height: 500px; /* نفس ارتفاع الصورة في السلايدر */
+  object-fit: cover;
+}
+
+.slide-overlay {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  color: #111; /* لون النص */
+}
+
+.slide-overlay h2 {
+  font-size: 3rem; /* حجم العنوان زي الصورة */
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.shop-btn {
+  display: inline-block;
+  background-color: #d82323; /* لون الزر برتقالي */
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.shop-btn:hover {
+  background-color: #d82323;
+}
+
+/* السهمين */
+.slick-prev, .slick-next {
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+}
+
+.slick-prev:before, .slick-next:before {
+  font-size: 30px;
+  color: #d82323;
+}
+
+.slick-prev {
+  left: 15px;
+}
+
+.slick-next {
+  right: 15px;
+}
