@@ -51,6 +51,7 @@ header a {
   font-size: 2rem;
   font-weight: bold;
   color: #d82323;
+  cursor: grab;
 }
 
 .search-box {
@@ -76,7 +77,9 @@ header a {
   font-size: 0.9rem;
   color: #333;
 }
-
+.contact:hover{
+    color: #d82323;
+}
 /* Category bar */
 .category-bar {
   display: flex;

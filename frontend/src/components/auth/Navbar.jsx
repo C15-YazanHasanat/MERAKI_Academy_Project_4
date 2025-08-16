@@ -1,9 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { FaUser, FaSignInAlt, FaShoppingCart, FaSearch, FaPhone } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUser, FaSignInAlt, FaShoppingCart, FaSearch } from "react-icons/fa";
+import { FaMessage } from "react-icons/fa6";
 import "./Navbar.css";
-
+import { useSelector } from "react-redux";
 const Navbar = () => {
+  const categories = useSelector((state) => state.categories?.items || []);
+  const navigate = useNavigate();
   return (
     <header>
       {/* Top bar */}
@@ -11,37 +14,48 @@ const Navbar = () => {
         <div className="top-links">
           <Link to="/">Home</Link>
           <Link to="/about">About Us</Link>
-          <Link to="/gift">Gift Registry</Link>
           <Link to="/contact">Contact Us</Link>
           <Link to="/blog">Blog</Link>
         </div>
         <div className="top-actions">
-          <Link to="/account"><FaUser /> My Account</Link>
-          <Link to="/login"><FaSignInAlt /> Login</Link>
-          <Link to="/cart"><FaShoppingCart /> Cart</Link>
+          <Link to="/account">
+            <FaUser /> My Account
+          </Link>
+          <Link to="/login">
+            <FaSignInAlt /> Login
+          </Link>
+          <Link to="/cart">
+            <FaShoppingCart /> Cart
+          </Link>
         </div>
       </div>
 
       {/* Middle bar */}
       <div className="middle-bar">
-        <div className="logo">TECHSAVE</div>
+        <div className="logo" onClick={() => navigate("/")}>
+          TECHNEST
+        </div>
         <div className="search-box">
           <input type="text" placeholder="Search" />
-          <button><FaSearch /></button>
+          <button>
+            <FaSearch />
+          </button>
         </div>
         <div className="contact">
-          QUESTIONS? CALL US <FaPhone /> 555.555.5555
+          QUESTIONS? Chat US <FaMessage />
         </div>
       </div>
 
-      {/* Bottom nav (categories) */}
       <nav className="category-bar">
-        {
+        {categories.length > 0 ? (
           categories.map((cat) => (
             <Link key={cat._id} to={`/category/${cat._id}`}>
               {cat.name}
             </Link>
-          ))}
+          ))
+        ) : (
+          <span>Loading categories...</span>
+        )}
       </nav>
     </header>
   );

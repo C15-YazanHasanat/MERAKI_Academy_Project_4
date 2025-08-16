@@ -11,6 +11,6 @@ export default configureStore({
     cart: cartReducer,
     order: orderReducer,
     product: productReducer,
-    category: categoryReducer
+    categories: categoryReducer
   },
 });
