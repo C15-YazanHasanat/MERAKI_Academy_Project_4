@@ -9,7 +9,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   return (
     <header>
+        
       {/* Top bar */}
+
       <div className="top-bar">
         <div className="top-links">
           <span onClick={() => navigate("/")}>Home</span>
@@ -32,6 +34,7 @@ const Navbar = () => {
       </div>
 
       {/* Middle bar */}
+
       <div className="middle-bar">
         <div className="logo" onClick={() => navigate("/")}>
           TECHNEST
@@ -54,6 +57,8 @@ const Navbar = () => {
           </span>
         </div>
       </div>
+
+            {/* category-bar */}
 
       <nav className="category-bar">
         {categories.length > 0 ? (

@@ -11,6 +11,10 @@ import AdminDashboard from "./components/auth/AdminDashboard";
 import Navbar from "./components/auth/Navbar";
 import CategoryList from "./components/categories/CategoryList";
 import ChatPage from "./components/chatPage/ChatPage";
+import Account from "./components/TobBAr files/Account";
+import AboutUS from "./components/TobBAr files/about";
+import Blog from "./components/TobBAr files/Blog";
+import ContactUs from "./components/TobBAr files/ContactUs";
 
 const App = () => {
   return (
@@ -27,6 +31,10 @@ const App = () => {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<h2>404 Not Found</h2>} />
         <Route path="/chatpage" element={<ChatPage/>}/>
+        <Route path="/account" element={<Account/>}/>
+        <Route path="/about" element={<AboutUS/>}/>
+        <Route path="/blog" element={<Blog/>}/>
+        <Route path="/contact" element={<ContactUs/>}/>
       </Routes>
     </div>
   );
