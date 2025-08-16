@@ -1,7 +1,6 @@
 const Home=()=>{
 return(
     <div>
-        welcom in Home
     </div>
 )
 }

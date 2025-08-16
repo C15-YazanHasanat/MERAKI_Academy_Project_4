@@ -8,11 +8,12 @@ import Cart from "./components/cart/cart";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import AdminDashboard from "./components/auth/AdminDashboard";
+import Navbar from "./components/auth/Navbar";
 
 const App = () => {
   return (
     <div className="App">
-      <h1>Hello World!</h1>
+      <Navbar/>
 
       <Routes>
         <Route path="/" element={<Home />} />
