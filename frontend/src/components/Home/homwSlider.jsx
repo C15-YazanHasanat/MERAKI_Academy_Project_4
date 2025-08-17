@@ -1,18 +1,17 @@
 import React from "react";
 import Slider from "react-slick";
-import slide1 from "../../assets/images/small.jpg";
-import slide2 from "../../assets/images/2.jpg";
-import slide3 from "../../assets/images/lap.webp";
-
+import slide1 from "../../assets/images/playstation2.png";
+import slide2 from "../../assets/images/pc.png";
+import slide3 from "../../assets/images/unname.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 
 const Home = () => {
   const slides = [
-    { src: slide2, title: "Take your laptop", link: "/collection/fruits" },
-    { src: slide2, title: "Made yourr PC", link: "/collection/spices" },
-    { src: slide2, title: "Play with entertainment", link: "/collection/bestsellers" },
+    { src: slide3, title: "Take your laptop", link: "/category/68a05b0f9e80ca53fa8e43ff" },
+    { src: slide2, title: "Make your PC", link: "/collection/spices" },
+    { src: slide1, title: "Play with entertainment", link: "/collection/bestsellers" },
   ];
 
   const settings = {

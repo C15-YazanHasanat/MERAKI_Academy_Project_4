@@ -92,7 +92,7 @@ const ProductPage = () => {
           <Typography variant="h4" gutterBottom>
             {product.name}
           </Typography>
-          <Typography variant="body1" color="text.secondary" paragraph>
+          <Typography variant="body1" color="text.secondary" >
             {product.description}
           </Typography>
           <Typography variant="h5" color="primary" gutterBottom>

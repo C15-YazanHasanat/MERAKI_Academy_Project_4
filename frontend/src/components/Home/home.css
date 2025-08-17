@@ -29,7 +29,7 @@
 
 .shop-btn {
   display: inline-block;
-  background-color: #d82323; /* لون الزر برتقالي */
+  background-color: #d82323; 
   color: #fff;
   padding: 12px 30px;
   border-radius: 25px;
@@ -41,6 +41,7 @@
 .shop-btn:hover {
   background-color: #fff;
   color: #d82323;
+  border: 1px solid #d82323;
 }
 
 .slick-prev, .slick-next {
@@ -60,4 +61,18 @@
 
 .slick-next {
   right: 15px;
+}
+
+.slick-dots li button:before {
+  color: #d82323 !important;
+  font-size: 12px; 
+}
+
+
+.slick-dots {
+  position: absolute;
+  bottom: 20px;  
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;  
 }

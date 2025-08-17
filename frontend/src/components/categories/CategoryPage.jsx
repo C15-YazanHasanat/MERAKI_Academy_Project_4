@@ -10,6 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "./category.css"
 const CategoryPage = () => {
   const { categoryId } = useParams();
   const [products, setProducts] = useState([]);
@@ -42,16 +43,16 @@ const navigate=useNavigate()
   const categoryName = products[0]?.category?.name || "Category";
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px" }} >
       <Typography variant="h4" gutterBottom>
         {categoryName}
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} className="category">
         {products.map((product) => (
           <Grid item key={product._id} xs={12} sm={6} md={4} lg={3} onClick={()=>{
          navigate(`/products/${product._id}`);
     }}> 
-            <Card sx={{ maxWidth: 200 }}>
+            <Card sx={{ maxWidth: 200 }}  >
               <CardMedia
                 component="img"
                 height="100"
