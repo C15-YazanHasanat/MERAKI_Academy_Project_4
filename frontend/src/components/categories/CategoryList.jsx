@@ -8,6 +8,8 @@ const CategoryList = () => {
  
   const getAllCategories=()=>{
     axios.get("http://localhost:5000/category").then((res)=>{
+      console.log(res.data);
+      
         dispatch(setCategories(res.data))
     }).catch((err)=>{
         console.log(err);

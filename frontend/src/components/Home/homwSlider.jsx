@@ -10,8 +10,8 @@ import "./Home.css";
 const Home = () => {
   const slides = [
     { src: slide3, title: "Take your laptop", link: "/category/68a05b0f9e80ca53fa8e43ff" },
-    { src: slide2, title: "Make your PC", link: "/collection/spices" },
-    { src: slide1, title: "Play with entertainment", link: "/collection/bestsellers" },
+    { src: slide2, title: "Make your PC", link: "/category/68a05ac59e80ca53fa8e43fb" },
+    { src: slide1, title: "Play with entertainment", link: "/category/68a05b039e80ca53fa8e43fd" },
   ];
 
   const settings = {
