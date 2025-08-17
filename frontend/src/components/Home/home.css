@@ -1,3 +1,4 @@
+
 .home-slider-compact {
   position: relative;
 }
@@ -8,7 +9,7 @@
 
 .slide-item img {
   width: 100%;
-  height: 500px; /* نفس ارتفاع الصورة في السلايدر */
+  height: 500px; 
   object-fit: cover;
 }
 
@@ -17,11 +18,11 @@
   top: 50%;
   left: 5%;
   transform: translateY(-50%);
-  color: #111; /* لون النص */
+  color: #d82323; 
 }
 
 .slide-overlay h2 {
-  font-size: 3rem; /* حجم العنوان زي الصورة */
+  font-size: 3rem; 
   font-weight: 700;
   margin-bottom: 20px;
 }
@@ -38,10 +39,10 @@
 }
 
 .shop-btn:hover {
-  background-color: #d82323;
+  background-color: #fff;
+  color: #d82323;
 }
 
-/* السهمين */
 .slick-prev, .slick-next {
   width: 40px;
   height: 40px;
