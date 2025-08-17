@@ -5,7 +5,7 @@ const productModel = require("../models/ProductSchema");
 const getProducts = (req, res) => {
   productModel
     .find()
-    .populate("category", "name-_id")
+    .populate("category", "name")
     .then((product) => {
       if (product.length>0) {
         res.status(200).json({

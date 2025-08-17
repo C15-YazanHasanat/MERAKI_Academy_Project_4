@@ -15,16 +15,19 @@ import Account from "./components/TobBAr files/Account";
 import AboutUS from "./components/TobBAr files/about";
 import Blog from "./components/TobBAr files/Blog";
 import ContactUs from "./components/TobBAr files/ContactUs";
+import CategoryPage from "./components/categories/CategoryPage";
 
 const App = () => {
   return (
     <div className="App">
       <Navbar/>
       <CategoryList/>
+      <Product/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Product />} />
         <Route path="/products/:id" element={<ProductPage />} />
+        <Route path="/category/:categoryId" element={<CategoryPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
