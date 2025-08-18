@@ -2,13 +2,18 @@ import Slider from "react-slick";
 import { useSelector } from "react-redux";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-const CategorySlider=()=>{
- const category=useSelector((state)=>{
-    return state.categories.items
- })
- const navigate=useNavigate()
- 
-const settings = {
+import fd from "../../../public/gaming/pla.png"
+const CategorySlider = () => {
+  const category = useSelector((state) => {
+    return state.categories.items;
+  });
+  const product = useSelector((state) => {
+    return state.product.items;
+  });
+
+  const navigate = useNavigate();
+
+  const settings = {
     dots: false,
     infinite: true,
     speed: 600,
@@ -26,24 +31,32 @@ const settings = {
   return (
     <div className="category-slider-container">
       <h3 style={{ textAlign: "center" }}>Shop by Category</h3>
-      <br/>
+      <br />
       <Slider {...settings}>
-        {category.map((item) => (
-          <div key={item._id} className="category-slide" onClick={()=>{
-            navigate(`/category/${item._id}`)
-          }}>
-            <div className="category-image-wrapper">
-              <img
-                src={item.image}
-                alt={item.name}
-              />
+        {category.map((item) => {
+          const count = product.filter(
+            (prod) => prod.category._id === item._id
+          ).length;
+
+          return (
+            <div
+              key={item._id}
+              className="category-slide"
+              onClick={() => {
+                navigate(`/category/${item._id}`);
+              }}
+            >
+              <div className="category-image-wrapper">
+                <img src={item.image} alt={item.name} />
+              </div>
+              <h4>{item.name}</h4>
+              <p>{count} items</p>
             </div>
-            <h4 >{item.name}</h4>
-          </div>
-        ))}
+          );
+        })}
       </Slider>
     </div>
   );
-}
+};
 
-export default CategorySlider
+export default CategorySlider;
