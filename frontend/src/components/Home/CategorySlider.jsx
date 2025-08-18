@@ -2,7 +2,6 @@ import Slider from "react-slick";
 import { useSelector } from "react-redux";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-import fd from "../../../public/gaming/pla.png"
 const CategorySlider = () => {
   const category = useSelector((state) => {
     return state.categories.items;
@@ -30,7 +29,9 @@ const CategorySlider = () => {
 
   return (
     <div className="category-slider-container">
-      <h3 style={{ textAlign: "center" }}>Shop by Category</h3>
+      <h3 style={{ textAlign: "center", fontSize: "24px" }}>
+        Shop by Category
+      </h3>
       <br />
       <Slider {...settings}>
         {category.map((item) => {

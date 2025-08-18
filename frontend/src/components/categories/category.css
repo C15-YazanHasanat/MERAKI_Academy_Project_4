@@ -7,7 +7,7 @@
 .category .MuiCard-root:hover {
   transform: translateY(-5px); 
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
-  border-color: darkred; 
-  border: 2px solid red;  
+  border-color: #080560; 
+  border: 2px solid #080560;  
 
 }

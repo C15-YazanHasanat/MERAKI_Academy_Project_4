@@ -76,7 +76,7 @@ const login = async (e) => {
             type="submit"
             variant="contained"
             fullWidth
-            sx={{ marginTop: 2, backgroundColor: "#d82323" }}
+            sx={{ marginTop: 2, backgroundColor: "#080560" }}
           >
             Login
           </Button>
@@ -89,7 +89,7 @@ const login = async (e) => {
         <Typography
           variant="body2"
           align="center"
-          sx={{ marginTop: 2, cursor: "pointer", color: "#d82323" }}
+          sx={{ marginTop: 2, cursor: "pointer", color: "#162be8fe" }}
           onClick={() => navigate("/register")}
         >
           Don't have an account? Register
