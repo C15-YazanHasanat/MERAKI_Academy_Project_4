@@ -1,11 +1,12 @@
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
 import "./Home.css";
-import slide1 from "../../../public/Lenovo.jpg"
+import { useNavigate } from "react-router-dom";
 const CategorySlider=()=>{
  const category=useSelector((state)=>{
     return state.categories.items
  })
+ const navigate=useNavigate()
  
 const settings = {
     dots: false,
@@ -28,7 +29,9 @@ const settings = {
       <br/>
       <Slider {...settings}>
         {category.map((item) => (
-          <div key={item._id} className="category-slide">
+          <div key={item._id} className="category-slide" onClick={()=>{
+            navigate(`/category/${item._id}`)
+          }}>
             <div className="category-image-wrapper">
               <img
                 src={item.image}
