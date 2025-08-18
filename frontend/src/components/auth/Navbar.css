@@ -3,16 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
-.nav-bar{
-  position: relative;
-}
+
 .menu-btn {
   font-size: 24px;
   cursor: pointer;
   padding: 10px;
   color: #fff;
   background: #080560;
-position: fixed; 
+  position: fixed;
   top: 10px;
   left: 10px;
   z-index: 1001;
@@ -61,7 +59,7 @@ position: fixed;
 
 .sidebar-links span:hover,
 .sidebar-actions span:hover {
-  color: #231eb4;
+  color: #1912db;
 }
 
 /* middle bar */
@@ -80,7 +78,7 @@ position: fixed;
   color: #fff;
   cursor: pointer;
   transition: 0.3s;
-padding-left: 30px;
+  padding-left: 30px;
 }
 
 .logo:hover {
@@ -132,6 +130,7 @@ padding-left: 30px;
 
 .category-bar a {
   color: #333;
+  text-decoration: none;
   transition: color 0.3s;
 }
 

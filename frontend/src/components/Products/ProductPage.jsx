@@ -10,25 +10,42 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
-import "./Product.css"
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
+import "./Product.css";
+
 const ProductPage = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
+  console.log(id);
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState("");
+  const dispatch = useDispatch();
+ const token = useSelector((state) => {
+    return state.auth.token;
+  });
+  // !!--- Function to fetch product by ID ---
+  const fetchProductById = async (productId) => {
+    try {
+      setLoading(true);
+      const res = await axios.get(
+        `http://localhost:5000/products/${productId}`
+      );
+      setProduct(res.data);
+
+      if (res.data.images && res.data.images.length > 0) {
+        setMainImage(res.data.images[0]);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`http://localhost:5000/products/${id}`)
-      .then((res) => {
-        setProduct(res.data);
-        if (res.data.images && res.data.images.length > 0) {
-          setMainImage(res.data.images[0]); 
-        }
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+    fetchProductById(id);
   }, [id]);
 
   if (loading)
@@ -44,6 +61,19 @@ const ProductPage = () => {
         Product not found
       </Typography>
     );
+
+  //!====add to cart==============
+ 
+  const addCart = () => {
+    axios
+      .post(
+        "http://localhost:5000/carts/add",
+        { productId: id, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => console.log(res.data))
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div style={{ padding: "20px" }}>
@@ -69,7 +99,9 @@ const ProductPage = () => {
                   sx={{
                     cursor: "pointer",
                     border:
-                      mainImage === img ? "2px solid #080560" : "1px solid #ddd",
+                      mainImage === img
+                        ? "2px solid #080560"
+                        : "1px solid #ddd",
                     width: 80,
                   }}
                   onClick={() => setMainImage(img)}
@@ -90,17 +122,27 @@ const ProductPage = () => {
           <Typography variant="h4" gutterBottom>
             {product.name}
           </Typography>
-          <Typography variant="body1" color="text.secondary" >
+          <Typography variant="body1" color="text.secondary">
             {product.description}
           </Typography>
-          <Typography className="price" variant="h5" color="primary" gutterBottom>
+          <Typography
+            className="price"
+            variant="h5"
+            color="primary"
+            gutterBottom
+          >
             ${product.price}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             In Stock: {product.stock}
           </Typography>
 
-          <Button className="button" variant="contained"  sx={{ mt: 2 }}>
+          <Button
+            className="button"
+            variant="contained"
+            sx={{ mt: 2 }}
+            onClick={addCart}
+          >
             Add to Cart
           </Button>
         </Grid>
