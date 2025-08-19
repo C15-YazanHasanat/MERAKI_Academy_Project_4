@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaSignInAlt, FaShoppingCart, FaSearch, FaBars, FaTimes,FaSignOutAlt } from "react-icons/fa";
 import { FaComment } from "react-icons/fa6";
@@ -12,6 +13,10 @@ const Navbar = () => {
   const isLoggedIn=useSelector((state)=>{
     return state.auth.isLoggedIn
   })
+  const  userName=useSelector((state)=>{
+    return state.auth.userName
+  })
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -69,6 +74,11 @@ const Navbar = () => {
             <FaSearch />
           </button>
         </div>
+         {isLoggedIn && userName && (
+    <span className="user-name" onClick={()=>{
+      navigate("/account")
+    }}><FaUser />Welcome {userName}</span>
+  )}
         <div className="contact">
           QUESTIONS?{" "}
           <span

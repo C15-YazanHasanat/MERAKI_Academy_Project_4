@@ -77,7 +77,8 @@ const login = (req, res) => {
           success: true,
           message: `Valid login credentials`,
           token: token,
-          userId:result._id
+          userId:result._id,
+          firstName: result.firstName,
         });
       } catch (error) {
         throw new Error(error.message);

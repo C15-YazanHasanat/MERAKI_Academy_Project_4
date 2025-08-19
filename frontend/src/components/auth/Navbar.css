@@ -112,11 +112,18 @@
   background: #e0dddd;
 }
 
-.contact {
+.contact  {
   font-size: 18px;
   color: #fff;
 }
-
+.user-name{
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+.user-name:hover {
+  color: #ccc;
+}
 .category-bar {
   display: flex;
   justify-content: center;

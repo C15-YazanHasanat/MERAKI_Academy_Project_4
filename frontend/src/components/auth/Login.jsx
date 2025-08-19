@@ -1,4 +1,4 @@
-import { setLogin, setUserId } from "../redux/authSlice";
+import { setLogin, setUserId,setUserName } from "../redux/authSlice";
 import React, { useState } from "react";
 import './Register.css';
 
@@ -27,6 +27,7 @@ const login = async (e) => {
         setMessage(""); 
         dispatch(setLogin(result.data.token))
         dispatch(setUserId(result.data.userId))
+        dispatch(setUserName(result.data.firstName))
         navigate("/");
       } else throw Error;
     } catch (error) {
