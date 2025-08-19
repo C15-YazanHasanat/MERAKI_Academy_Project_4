@@ -1,23 +1,33 @@
 import React, { useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaSignInAlt, FaShoppingCart, FaSearch, FaBars, FaTimes,FaSignOutAlt } from "react-icons/fa";
+import {
+  FaUser,
+  FaSignInAlt,
+  FaShoppingCart,
+  FaSearch,
+  FaBars,
+  FaTimes,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { FaComment } from "react-icons/fa6";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
-import {setLogout} from "../redux/authSlice"
+import { setLogout } from "../redux/authSlice";
+
 const Navbar = () => {
+  const [search, setSearch] = useState("");
   const categories = useSelector((state) => state.categories.items);
   const navigate = useNavigate();
-  const dispatch=useDispatch()
-  const isLoggedIn=useSelector((state)=>{
-    return state.auth.isLoggedIn
-  })
-  const  userName=useSelector((state)=>{
-    return state.auth.userName
-  })
-  
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const userName = useSelector((state) => state.auth.userName);
+  const product = useSelector((state) => state.product.items);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const filteredProducts = product.filter((p) =>
+    p.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="nav-bar">
@@ -25,60 +35,140 @@ const Navbar = () => {
         <FaBars />
       </div>
 
+      {/* sidebar*/}
       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="close-btn" onClick={() => setSidebarOpen(false)}>
           <FaTimes />
         </div>
 
         <div className="sidebar-links">
-          <span onClick={() => { navigate("/"); setSidebarOpen(false); }}>Home</span>
-          <span onClick={() => { navigate("/about"); setSidebarOpen(false); }}>About Us</span>
-          <span onClick={() => { navigate("/contact"); setSidebarOpen(false); }}>Contact Us</span>
-          <span onClick={() => { navigate("/blog"); setSidebarOpen(false); }}>Blog</span>
+          <span
+            onClick={() => {
+              navigate("/");
+              setSidebarOpen(false);
+            }}
+          >
+            Home
+          </span>
+          <span
+            onClick={() => {
+              navigate("/about");
+              setSidebarOpen(false);
+            }}
+          >
+            About Us
+          </span>
+          <span
+            onClick={() => {
+              navigate("/contact");
+              setSidebarOpen(false);
+            }}
+          >
+            Contact Us
+          </span>
+          <span
+            onClick={() => {
+              navigate("/blog");
+              setSidebarOpen(false);
+            }}
+          >
+            Blog
+          </span>
         </div>
 
         <div className="sidebar-actions">
-          <span onClick={() => { navigate("/account"); setSidebarOpen(false); }}>
+          <span
+            onClick={() => {
+              navigate("/account");
+              setSidebarOpen(false);
+            }}
+          >
             <FaUser /> My Account
           </span>
-          
-          <span onClick={() => { navigate("/cart"); setSidebarOpen(false); }}>
+
+          <span
+            onClick={() => {
+              navigate("/cart");
+              setSidebarOpen(false);
+            }}
+          >
             <FaShoppingCart /> Cart
           </span>
-          {isLoggedIn ?(
-        <span
-      onClick={() => {
-        
-        dispatch(setLogout());
-        setSidebarOpen(false);
-        navigate("/"); 
-      }}
-    >
-      Logout  <FaSignOutAlt /> 
-    </span>):
-    <span onClick={() => { navigate("/login"); setSidebarOpen(false); }}>
-            <FaSignInAlt /> Login
-          </span>
-    }
+
+          {isLoggedIn ? (
+            <span
+              onClick={() => {
+                dispatch(setLogout());
+                setSidebarOpen(false);
+                navigate("/");
+              }}
+            >
+              Logout <FaSignOutAlt />
+            </span>
+          ) : (
+            <span
+              onClick={() => {
+                navigate("/login");
+                setSidebarOpen(false);
+              }}
+            >
+              <FaSignInAlt /> Login
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Middle bar */}
+      {/* middle bar*/}
       <div className="middle-bar">
         <div className="logo" onClick={() => navigate("/")}>
-            TECHNEST
+          TECHNEST
         </div>
+
+        {/* search */}
         <div className="search-box">
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
           <button>
             <FaSearch />
           </button>
+
+          {search && (
+            <div className="search-results">
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((p) => (
+                  <div
+                    key={p._id}
+                    className="search-item"
+                    onClick={() => {
+                      navigate(`/products/${p._id}`);
+                      setSearch("");
+                    }}
+                  >
+                    {p.name}
+                  </div>
+                ))
+              ) : (
+                <div className="search-item">No results found</div>
+              )}
+            </div>
+          )}
         </div>
-         {isLoggedIn && userName && (
-    <span className="user-name" onClick={()=>{
-      navigate("/account")
-    }}><FaUser />Welcome {userName}</span>
-  )}
+
+        {isLoggedIn && userName && (
+          <span
+            className="user-name"
+            onClick={() => {
+              navigate("/account");
+            }}
+          >
+            <FaUser /> Welcome {userName}
+          </span>
+        )}
+
         <div className="contact">
           QUESTIONS?{" "}
           <span
@@ -92,7 +182,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* category-bar */}
+      {/* category*/}
       <nav className="category-bar">
         {categories.length > 0 ? (
           categories.map((cat) => (
