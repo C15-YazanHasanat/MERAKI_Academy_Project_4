@@ -17,7 +17,9 @@ const getCart = (req, res) => {
 const addToCart = (req, res) => {
   const userId = req.user.userId;
   const { productId, quantity } = req.body;
-
+if (!userId) {
+      return res.status(401).json({ message:"You have to login" });
+    }
   ProductModel.findById(productId)
     .then((product) => {
       if (!product) return res.status(404).json({ message: "Product not found" });

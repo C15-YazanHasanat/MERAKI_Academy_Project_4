@@ -21,28 +21,33 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState("");
+  const [messageCArt, setMessageCart] = useState(null);
   const dispatch = useDispatch();
- const token = useSelector((state) => {
+  const token = useSelector((state) => {
     return state.auth.token;
   });
   // !!--- Function to fetch product by ID ---
-  const fetchProductById = async (productId) => {
-    try {
-      setLoading(true);
-      const res = await axios.get(
-        `http://localhost:5000/products/${productId}`
-      );
+const fetchProductById = (productId) => {
+  setLoading(true);
+
+  axios
+    .get(`http://localhost:5000/products/${productId}`)
+    .then((res) => {
       setProduct(res.data);
 
       if (res.data.images && res.data.images.length > 0) {
         setMainImage(res.data.images[0]);
       }
-    } catch (err) {
-      console.error(err);
-    } finally {
+
       setLoading(false);
-    }
-  };
+    })
+    .catch((err) => {
+      console.error(err);
+
+      setLoading(false);
+    });
+};
+
 
   useEffect(() => {
     fetchProductById(id);
@@ -63,18 +68,29 @@ const ProductPage = () => {
     );
 
   //!====add to cart==============
- 
+
   const addCart = () => {
+    setMessageCart(null);
     axios
       .post(
         "http://localhost:5000/carts/add",
         { productId: id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err));
-  };
+      .then((res) => {
+        console.log(res.data.message);
 
+        dispatch(addToCart(res.data));
+        setMessageCart(true);
+        setTimeout(() => setMessageCart(null), 2000);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+
+        setMessageCart(false);
+        setTimeout(() => setMessageCart(null), 2000);
+      });
+  };
   return (
     <div style={{ padding: "20px" }}>
       <Grid container spacing={4}>
@@ -83,7 +99,7 @@ const ProductPage = () => {
             <CardMedia
               component="img"
               height="400"
-              image={mainImage || "https://via.placeholder.com/400"}
+              image={mainImage}
               alt={product.name}
             />
           </Card>
@@ -131,7 +147,7 @@ const ProductPage = () => {
             color="primary"
             gutterBottom
           >
-            ${product.price}
+            Price: ${product.price}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             In Stock: {product.stock}
@@ -145,6 +161,13 @@ const ProductPage = () => {
           >
             Add to Cart
           </Button>
+          {messageCArt === true && (
+            <div className="sucmsg"> added to cart</div>
+          )}
+          {messageCArt === false && (
+            <div className="errmsg"> please login</div>
+          )}
+          
         </Grid>
       </Grid>
     </div>

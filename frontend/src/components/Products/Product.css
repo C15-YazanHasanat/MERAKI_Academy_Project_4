@@ -1,3 +1,23 @@
-.button{
-    background-color: #d82323;
+.button {
+  background-color: #d82323;
+  display: block; 
+  margin-bottom: 10px; 
+}
+
+.sucmsg {
+  width: 350px;
+  max-width: 100%; 
+  text-align: center;
+  margin: 0 auto; 
+  color: forestgreen;
+
+}
+.errmsg{
+    width: 350px;
+  max-width: 100%; 
+  text-align: center;
+  margin: 0 auto;
+
+  color: red;
+
 }

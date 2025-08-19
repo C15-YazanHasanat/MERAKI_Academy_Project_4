@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaSignInAlt, FaShoppingCart, FaSearch, FaBars, FaTimes } from "react-icons/fa";
+import { FaUser, FaSignInAlt, FaShoppingCart, FaSearch, FaBars, FaTimes,FaSignOutAlt } from "react-icons/fa";
 import { FaComment } from "react-icons/fa6";
 import "./Navbar.css";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import {setLogout} from "../redux/authSlice"
 const Navbar = () => {
   const categories = useSelector((state) => state.categories?.items || []);
   const navigate = useNavigate();
+  const dispatch=useDispatch()
+  const isLoggedIn=useSelector((state)=>{
+    return state.auth.isLoggedIn
+  })
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -32,12 +36,25 @@ const Navbar = () => {
           <span onClick={() => { navigate("/account"); setSidebarOpen(false); }}>
             <FaUser /> My Account
           </span>
-          <span onClick={() => { navigate("/login"); setSidebarOpen(false); }}>
-            <FaSignInAlt /> Login
-          </span>
+          
           <span onClick={() => { navigate("/cart"); setSidebarOpen(false); }}>
             <FaShoppingCart /> Cart
           </span>
+          {isLoggedIn ?(
+        <span
+      onClick={() => {
+        
+        dispatch(setLogout());
+        setSidebarOpen(false);
+        navigate("/"); 
+      }}
+    >
+      Logout  <FaSignOutAlt /> 
+    </span>):
+    <span onClick={() => { navigate("/login"); setSidebarOpen(false); }}>
+            <FaSignInAlt /> Login
+          </span>
+    }
         </div>
       </div>
 
