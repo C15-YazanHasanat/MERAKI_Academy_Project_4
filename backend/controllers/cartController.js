@@ -5,7 +5,7 @@ const ProductModel = require("../models/ProductSchema");
 const getCart = (req, res) => {
   const userId = req.user.userId;
   CartModel.findOne({ user: userId })
-    .populate("products.product", "name price images")
+    .populate("products.product", "name price images description category")
     .then((cart) => {
       if (!cart) return res.status(404).json({ message: "Cart is empty" });
       res.json(cart);

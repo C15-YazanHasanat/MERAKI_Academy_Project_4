@@ -7,7 +7,7 @@ import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import {setLogout} from "../redux/authSlice"
 const Navbar = () => {
-  const categories = useSelector((state) => state.categories?.items || []);
+  const categories = useSelector((state) => state.categories.items);
   const navigate = useNavigate();
   const dispatch=useDispatch()
   const isLoggedIn=useSelector((state)=>{
