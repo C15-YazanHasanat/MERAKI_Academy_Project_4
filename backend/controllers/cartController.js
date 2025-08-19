@@ -87,7 +87,6 @@ const removeFromCart = (req, res) => {
         (item) => item.product.toString() !== productId
       );
 
-      // إذا صار الكارت فاضي نحذفه
       if (cart.products.length === 0) {
         return cart.deleteOne().then(() => 
           res.json({ message: "Cart is now empty and removed" })

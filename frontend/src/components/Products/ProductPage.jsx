@@ -16,7 +16,6 @@ import "./Product.css";
 
 const ProductPage = () => {
   const { id } = useParams();
-  console.log(id);
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -78,9 +77,8 @@ const fetchProductById = (productId) => {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
-        console.log(res.data.message);
 
-        dispatch(addToCart(res.data));
+        dispatch(addToCart({ product: product, quantity: 1 }));;
         setMessageCart(true);
         setTimeout(() => setMessageCart(null), 2000);
       })

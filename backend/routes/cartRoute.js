@@ -25,7 +25,7 @@ cartRouter.put("/update", updateCartItem);
 //path==>http://localhost:5000/carts/update
 
 
-cartRouter.delete("/remove", removeFromCart);
-//path==>http://localhost:5000/carts/remove
+cartRouter.delete("/delete", removeFromCart);
+//path==>http://localhost:5000/carts/delete
 
 module.exports = cartRouter;
