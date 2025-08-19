@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   Grid,
   Card,
@@ -12,11 +13,11 @@ import {
   Box,
 } from "@mui/material";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
-
+import { setLogout } from "../redux/authSlice";
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
   const token = useSelector((state) => state.auth.token);
-
+  const dispatch = useDispatch();
   //!=========get all cart===========
   const getAllCarts = () => {
     axios
@@ -28,6 +29,9 @@ const Cart = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response?.data?.message === "The token is invalid or expired") {
+          dispatch(setLogout());
+        }
       });
   };
 
@@ -52,12 +56,15 @@ const Cart = () => {
       })
       .catch((err) => {
         console.log("Error removing product:", err);
+        if (err.response?.data?.message === "The token is invalid or expired") {
+          dispatch(setLogout());
+        }
       });
   };
 
   //!=========update quantity cart===========
 
-  const updateQuantity = (productId, quantity) => {
+  const updateQuantity = (productId, quantity, className) => {
     if (quantity < 1) return;
     axios
       .put(
@@ -70,7 +77,6 @@ const Cart = () => {
       })
       .catch((err) => console.log(err));
   };
-  console.log(cartItem);
 
   return (
     <div style={{ padding: "20px" }}>
@@ -97,9 +103,7 @@ const Cart = () => {
 
                 <Grid item xs={12} sm={6}>
                   <Typography variant="h6">{item.product.name}</Typography>
-                  <Typography variant="body2">
-                    {item.product.description}
-                  </Typography>
+
                   <Box display="flex" alignItems="center" mt={1}>
                     <IconButton
                       color="error"
@@ -108,40 +112,53 @@ const Cart = () => {
                     >
                       <FaTrash />
                     </IconButton>
-                    <IconButton
-                      size="small"
-                      onClick={() =>
-                        updateQuantity(item.product._id, item.quantity - 1)
-                      }
+                    <Box
+                      display="flex"
+                      sx={{
+                        border: "1px solid gray",
+                        borderRadius: "15px",
+                      }}
                     >
-                      <FaMinus />
-                    </IconButton>
-                    <Typography sx={{ mx: 1 }}>{item.quantity}</Typography>
-                    <IconButton
-                      size="small"
-                      onClick={() =>
-                        updateQuantity(item.product._id, item.quantity + 1)
-                      }
-                    >
-                      <FaPlus />
-                    </IconButton>
+                      <IconButton
+                        size="small"
+                        onClick={() =>
+                          updateQuantity(item.product._id, item.quantity - 1)
+                        }
+                      >
+                        <FaMinus />
+                      </IconButton>
+                      <Typography sx={{ mx: 1 }}>{item.quantity}</Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() =>
+                          updateQuantity(item.product._id, item.quantity + 1)
+                        }
+                      >
+                        <FaPlus />
+                      </IconButton>
+                    </Box>
                   </Box>
                 </Grid>
 
-                {/* السعر */}
                 <Grid item xs={12} sm={3}></Grid>
               </Grid>
               <Typography variant="h6" align="right">
                 ${item.product.price}
               </Typography>
-              {/* خط فاصل بين المنتجات */}
               {index < cartItem.length - 1 && <Divider sx={{ my: 2 }} />}
             </div>
           ))}
-
-          {/* المجموع الكلي */}
-          <Box textAlign="right" mt={3}>
+          <Box
+            textAlign="right"
+            mt={3}
+            sx={{
+              borderTop: "1px solid gray",
+              padding: 2,
+            }}
+          >
             <Typography variant="h6">
+              Items: (
+              {cartItem.reduce((total, item) => total + item.quantity, 0)})
               Total: $
               {cartItem.reduce(
                 (sum, item) => sum + item.product.price * item.quantity,
