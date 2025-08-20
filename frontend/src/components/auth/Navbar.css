@@ -16,6 +16,7 @@
   z-index: 1001;
   border-radius: 5px;
   transition: background 0.3s;
+  align-items: center;
 }
 
 .menu-btn:hover {
@@ -66,6 +67,7 @@
 .middle-bar {
   background: #080560;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
@@ -108,7 +110,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
   color: #555;
 }
 
@@ -165,6 +167,19 @@
   cursor: pointer;
   color: #fff;
 
+}
+.user-cart span {
+  display: flex;  
+  align-items: center;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  gap: 5px;
+}
+
+.user-cart span:hover{
+    color: #ccc;
+;
 }
 .contact  {
   font-size: 18px;

@@ -22,6 +22,10 @@ const Navbar = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const userName = useSelector((state) => state.auth.userName);
   const product = useSelector((state) => state.product.items);
+const cartItems=useSelector((state)=>{
+  return state.cart.items
+})
+console.log(cartItems);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -122,14 +126,26 @@ const Navbar = () => {
           )}
         </div>
 
-        
         <div className="user-cart">
+          {isLoggedIn && userName && (
+            <span
+              className="user-name"
+              onClick={() => {
+                navigate("/account");
+              }}
+            >
+              <FaUser /> Welcome {userName}
+            </span>
+          )}
           <span
             onClick={() => {
               navigate("/cart");
             }}
           >
             <FaShoppingCart /> Cart
+            {cartItems.length > 0 && (
+      <p className="cart-count">({cartItems.length})</p>
+    )}
           </span>
 
           {isLoggedIn ? (

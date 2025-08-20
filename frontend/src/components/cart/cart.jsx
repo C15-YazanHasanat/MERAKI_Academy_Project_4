@@ -12,6 +12,7 @@ import {
   Divider,
   Box,
 } from "@mui/material";
+import { setCart } from "../redux/cartSlice";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import { setLogout } from "../redux/authSlice";
 const Cart = () => {
@@ -26,6 +27,7 @@ const Cart = () => {
       })
       .then((res) => {
         setCartItem(res.data.products || []);
+        dispatch(setCart(res.data.products))
       })
       .catch((err) => {
         console.log(err);
