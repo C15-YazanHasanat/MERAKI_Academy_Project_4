@@ -15,6 +15,10 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
+  const cartItems=useSelector((state)=>{
+    return state.cart.items
+  })
+  
 const login = async (e) => {
     
     e.preventDefault();

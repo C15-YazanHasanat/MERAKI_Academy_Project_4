@@ -15,10 +15,12 @@ import {
 import { setCart } from "../redux/cartSlice";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import { setLogout } from "../redux/authSlice";
+import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   //!=========get all cart===========
   const getAllCarts = () => {
     axios
@@ -27,7 +29,7 @@ const Cart = () => {
       })
       .then((res) => {
         setCartItem(res.data.products || []);
-        dispatch(setCart(res.data.products))
+        dispatch(setCart(res.data.products));
       })
       .catch((err) => {
         console.log(err);
@@ -167,7 +169,22 @@ const Cart = () => {
                 0
               )}
             </Typography>
-            <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                mt: 2,
+                ":hover": {
+                  backgroundColor: "#fff", 
+                  color:"blue",
+                  transform: "scale(1.05)", 
+                },
+                transition: "all 0.2s ease-in-out", 
+              }}
+              onClick={() => {
+                navigate("/checkout");
+              }}
+            >
               Checkout
             </Button>
           </Box>

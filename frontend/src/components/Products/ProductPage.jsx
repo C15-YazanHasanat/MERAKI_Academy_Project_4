@@ -90,7 +90,7 @@ const fetchProductById = (productId) => {
       });
   };
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", paddingBottom: "70px" }}>
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <Card>

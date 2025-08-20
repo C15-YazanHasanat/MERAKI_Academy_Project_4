@@ -16,6 +16,8 @@ import AboutUS from "./components/TobBAr files/about";
 import Blog from "./components/TobBAr files/Blog";
 import ContactUs from "./components/TobBAr files/ContactUs";
 import CategoryPage from "./components/categories/CategoryPage";
+import BottomBar from "./components/auth/BottomBar";
+import Checkout from "./components/Checkout/Checkout";
 
 const App = () => {
   return (
@@ -37,8 +39,11 @@ const App = () => {
         <Route path="/about" element={<AboutUS/>}/>
         <Route path="/blog" element={<Blog/>}/>
         <Route path="/contact" element={<ContactUs/>}/>
+        <Route path="/checkout" element={<Checkout/>}/>
          <Route path="*" element={<h2>404 Not Found</h2>} />
       </Routes>
+        {/* <BottomBar/> */}
+
     </div>
   );
 };
