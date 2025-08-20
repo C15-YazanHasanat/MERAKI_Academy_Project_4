@@ -35,7 +35,7 @@ const Navbar = () => {
         <FaBars />
       </div>
 
-      {/* sidebar*/}
+      {/* sidebar */}
       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="close-btn" onClick={() => setSidebarOpen(false)}>
           <FaTimes />
@@ -75,50 +75,9 @@ const Navbar = () => {
             Blog
           </span>
         </div>
-
-        <div className="sidebar-actions">
-          <span
-            onClick={() => {
-              navigate("/account");
-              setSidebarOpen(false);
-            }}
-          >
-            <FaUser /> My Account
-          </span>
-
-          <span
-            onClick={() => {
-              navigate("/cart");
-              setSidebarOpen(false);
-            }}
-          >
-            <FaShoppingCart /> Cart
-          </span>
-
-          {isLoggedIn ? (
-            <span
-              onClick={() => {
-                dispatch(setLogout());
-                setSidebarOpen(false);
-                navigate("/");
-              }}
-            >
-              Logout <FaSignOutAlt />
-            </span>
-          ) : (
-            <span
-              onClick={() => {
-                navigate("/login");
-                setSidebarOpen(false);
-              }}
-            >
-              <FaSignInAlt /> Login
-            </span>
-          )}
-        </div>
       </div>
 
-      {/* middle bar*/}
+      {/* middle bar */}
       <div className="middle-bar">
         <div className="logo" onClick={() => navigate("/")}>
           TECHNEST
@@ -148,7 +107,12 @@ const Navbar = () => {
                       setSearch("");
                     }}
                   >
-                    {p.name}
+                    <img
+                      src={p.images[0]}
+                      alt={p.name}
+                      className="search-img"
+                    />
+                    <span>{p.name}</span>
                   </div>
                 ))
               ) : (
@@ -158,15 +122,47 @@ const Navbar = () => {
           )}
         </div>
 
-        {isLoggedIn && userName && (
+        
+        <div className="user-cart">
           <span
-            className="user-name"
             onClick={() => {
-              navigate("/account");
+              navigate("/cart");
             }}
           >
-            <FaUser /> Welcome {userName}
+            <FaShoppingCart /> Cart
           </span>
+
+          {isLoggedIn ? (
+            <span
+              onClick={() => {
+                dispatch(setLogout());
+                navigate("/");
+              }}
+            >
+              Logout <FaSignOutAlt />
+            </span>
+          ) : (
+            <span
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              <FaSignInAlt /> Login
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* category */}
+      <nav className="category-bar">
+        {categories.length > 0 ? (
+          categories.map((cat) => (
+            <Link key={cat._id} to={`/category/${cat._id}`}>
+              {cat.name}
+            </Link>
+          ))
+        ) : (
+          <span>Loading categories...</span>
         )}
 
         <div className="contact">
@@ -180,19 +176,6 @@ const Navbar = () => {
             Chat US <FaComment />
           </span>
         </div>
-      </div>
-
-      {/* category*/}
-      <nav className="category-bar">
-        {categories.length > 0 ? (
-          categories.map((cat) => (
-            <Link key={cat._id} to={`/category/${cat._id}`}>
-              {cat.name}
-            </Link>
-          ))
-        ) : (
-          <span>Loading categories...</span>
-        )}
       </nav>
     </div>
   );
