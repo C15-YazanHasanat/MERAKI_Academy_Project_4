@@ -182,7 +182,7 @@ const Cart = () => {
                 transition: "all 0.2s ease-in-out", 
               }}
               onClick={() => {
-                navigate("/checkout");
+                navigate("/getAddress");
               }}
             >
               Checkout

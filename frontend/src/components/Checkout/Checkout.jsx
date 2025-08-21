@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Typography,
@@ -14,7 +14,9 @@ import {
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.items);
   console.log(cartItems);
-
+  const location =JSON.parse(localStorage.getItem("marker"))
+ console.log(location);
+ 
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,12 +26,12 @@ const Checkout = () => {
     0
   );
 
-  const handleCheckout = () => {
-    if (!name || !address || !phone) {
-      return <div>please</div>;
-    }
-    alert(`Order confirmed! Total: $${totalPrice}`);
-  };
+  useEffect(()=>{
+  if (location) {
+  setAddress(`${location.lat} ${location.lng}`); 
+}
+
+  },[])
 
   return (
     <Box sx={{ padding: "20px", minHeight: "80vh" }}>
@@ -48,21 +50,21 @@ const Checkout = () => {
             <Divider sx={{ mb: 2 }} />
             <TextField
               label="Full Name"
-              
+              fullWidth
               margin="normal"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
               label="Address"
-              
+              fullWidth
               margin="normal"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
             <TextField
               label="Phone Number"
-              
+              fullWidth
               margin="normal"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -77,7 +79,6 @@ const Checkout = () => {
                   transform: "scale(1.05)", 
                 },
                 transition: "all 0.2s ease-in-out",  }}
-              onClick={handleCheckout}
             >
               pay now
             </Button>

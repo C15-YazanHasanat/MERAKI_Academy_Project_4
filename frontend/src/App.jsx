@@ -18,7 +18,7 @@ import ContactUs from "./components/TobBAr files/ContactUs";
 import CategoryPage from "./components/categories/CategoryPage";
 import BottomBar from "./components/auth/BottomBar";
 import Checkout from "./components/Checkout/Checkout";
-import SimpleMap from "./components/auth/map";
+import GetAddress from "./components/cart/GetAddress";
 
 const App = () => {
   return (
@@ -42,7 +42,7 @@ const App = () => {
         <Route path="/contact" element={<ContactUs/>}/>
         <Route path="/checkout" element={<Checkout/>}/>
          <Route path="*" element={<h2>404 Not Found</h2>} />
-         <Route path="/map" element={<SimpleMap/>}/>
+         <Route path="/getAddress" element={<GetAddress/>}/>
       </Routes>
         {/* <BottomBar/> */}
 
