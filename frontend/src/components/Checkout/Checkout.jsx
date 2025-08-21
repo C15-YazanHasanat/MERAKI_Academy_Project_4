@@ -14,33 +14,37 @@ import {
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.items);
   console.log(cartItems);
-  const location =JSON.parse(localStorage.getItem("marker"))
- console.log(location);
- 
+  const location = useSelector((state) => {
+    return state.location.location;
+  });
+
   const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
+  const [nearestLocation, setNearestLocation] = useState("");
+  const [coordinates, setCoordinates] = useState({ lat: "", lng: "" });
 
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0
   );
-
-  useEffect(()=>{
-  if (location) {
-  setAddress(`${location.lat} ${location.lng}`); 
-}
-
-  },[])
-
+  useEffect(() => {
+    if (location) {
+      setNearestLocation(location.nearestLocation || "");
+      setCoordinates(location.coordinates || { lat: "", lng: "" });
+    }
+  }, [location]);
   return (
     <Box sx={{ padding: "20px", minHeight: "80vh" }}>
       <Typography variant="h4" gutterBottom>
         Checkout
       </Typography>
 
-      <Grid container spacing={4}>
-        
+      <Grid
+        container
+        spacing={4}
+        justifyContent="center" 
+        alignItems="flex-start"
+      >
         {/* Shipping Info */}
         <Grid item xs={12} md={6}>
           <Paper sx={{ padding: 2 }}>
@@ -55,13 +59,7 @@ const Checkout = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <TextField
-              label="Address"
-              fullWidth
-              margin="normal"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
+
             <TextField
               label="Phone Number"
               fullWidth
@@ -69,16 +67,28 @@ const Checkout = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
+            <Box sx={{ textAlign: "left", padding: "2px" }}>
+              <Typography variant="body1">
+                Nearest Location: {nearestLocation}
+              </Typography>
+              <Typography variant="body1">
+                Coordinates: {coordinates.lat}, {coordinates.lng}
+              </Typography>
+            </Box>
             <Button
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ mt: 2,width:"200px",":hover": {
-                  backgroundColor: "#fff", 
-                  color:"blue",
-                  transform: "scale(1.05)", 
+              sx={{
+                mt: 2,
+                width: "200px",
+                ":hover": {
+                  backgroundColor: "#fff",
+                  color: "blue",
+                  transform: "scale(1.05)",
                 },
-                transition: "all 0.2s ease-in-out",  }}
+                transition: "all 0.2s ease-in-out",
+              }}
             >
               pay now
             </Button>
@@ -121,7 +131,7 @@ const Checkout = () => {
                       mr: 2,
                     }}
                   />
-                  <Typography gutterBottom >
+                  <Typography gutterBottom>
                     {item.product.name} (items {item.quantity})
                   </Typography>
                   <Typography>${item.product.price * item.quantity}</Typography>

@@ -40,11 +40,6 @@ export default function GetAddress() {
   const [locationText, setLocationText] = useState("");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (marker) {
-      setLocationText(`${marker.lat}, ${marker.lng}`);
-    }
-  }, [marker]);
 
   const handleMapClick = ({ lat, lng }) => {
     const newMarker = { lat, lng };
@@ -53,7 +48,7 @@ export default function GetAddress() {
   };
 
    const handleConfirm = () => {
-    if (marker || locationText.trim() !== "") {
+    if (marker && locationText.trim() !== "") {
       dispatch(
         setLocation({
           coordinates: marker || null,

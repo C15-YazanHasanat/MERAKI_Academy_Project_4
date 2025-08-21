@@ -18,7 +18,7 @@ import ContactUs from "./components/TobBAr files/ContactUs";
 import CategoryPage from "./components/categories/CategoryPage";
 import BottomBar from "./components/auth/BottomBar";
 import Checkout from "./components/Checkout/Checkout";
-import GetAddress from "./components/cart/GetAddress";
+import GetAddress from "./components/Checkout/GetAddress";
 
 const App = () => {
   return (

@@ -25,7 +25,6 @@ const Navbar = () => {
 const cartItems=useSelector((state)=>{
   return state.cart.items
 })
-console.log(cartItems);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
