@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { setTheName, setThePhone } from "../redux/ordersSlice";
 import {
   Typography,
   TextField,
@@ -24,6 +25,7 @@ const stripePromise = loadStripe(
 );
 
 const Checkout = () => {
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   console.log(cartItems);
   const location = useSelector((state) => {
@@ -36,6 +38,8 @@ const Checkout = () => {
   const [nearestLocation, setNearestLocation] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: "", lng: "" });
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [prosccing, setProsccing] = useState(false);
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0
@@ -96,6 +100,11 @@ const Checkout = () => {
       )
       .then((res) => {
         console.log("Cash order created:", res.data);
+        setSuccessMessage("Payment successful! Your order has been placed.");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 4000);
+        setProsccing(true);
       })
       .catch((err) => {
         console.error("Error creating cash order:", err);
@@ -126,7 +135,10 @@ const Checkout = () => {
               fullWidth
               margin="normal"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                dispatch(setTheName(e.target.value));
+              }}
             />
 
             <TextField
@@ -134,7 +146,10 @@ const Checkout = () => {
               fullWidth
               margin="normal"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => {
+                setPhone(e.target.value);
+                dispatch(setThePhone(e.target.value));
+              }}
             />
             <Box sx={{ textAlign: "left", padding: "2px" }}>
               <Typography variant="body1">
@@ -167,41 +182,57 @@ const Checkout = () => {
                   <PaymentPage />
                 </Elements>
               )}
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  sx={{
-                    mt: 2,
-                    width: "200px",
-                    ":hover": {
-                      backgroundColor: "#fff",
-                      color: "blue",
-                      transform: "scale(1.05)",
-                    },
-                    transition: "all 0.2s ease-in-out",
-                  }}
-                  onClick={() => {
-                    if (!name || !phone) {
-                      setErrorMessage(
-                        "Please enter your NAME and PHONE NUMBER before proceeding."
-                      );
-                      return;
-                    }
+              {payMehod === "cash" && (
+                <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    sx={{
+                      mt: 2,
+                      width: "200px",
+                      ":hover": {
+                        backgroundColor: "#fff",
+                        color: "blue",
+                        transform: "scale(1.05)",
+                      },
+                      transition: "all 0.2s ease-in-out",
+                    }}
+                    disabled={prosccing}
+                    onClick={() => {
+                      if (!name || !phone) {
+                        setErrorMessage(
+                          "Please enter your NAME and PHONE NUMBER before proceeding."
+                        );
+                        return;
+                      }
 
-                    setErrorMessage("");
-                    if (payMehod === "cash") {
-                      payCash();
-                    }
-                  }}
-                >
-                  pay now
-                </Button>
-              </Box>
+                      setErrorMessage("");
+                      if (payMehod === "cash") {
+                        payCash();
+                      }
+                    }}
+                  >
+                    pay now
+                  </Button>
+                </Box>
+              )}
             </Box>
             {errorMessage && (
               <Box sx={{ color: "red", mt: 1, mb: 1 }}>{errorMessage}</Box>
+            )}
+            {successMessage && (
+              <Box
+                sx={{
+                  mt: 2,
+                  p: 2,
+                  backgroundColor: "green",
+                  color: "white",
+                  borderRadius: 1,
+                }}
+              >
+                {successMessage}
+              </Box>
             )}
           </Paper>
         </Grid>

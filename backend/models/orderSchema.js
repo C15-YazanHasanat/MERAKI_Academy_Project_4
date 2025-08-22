@@ -16,7 +16,7 @@ const orderSchema = new mongoose.Schema(
     address: { type: String, required: true },
     paymentMethod: { type: String, required: true },customerName: { type: String, required: true },
     customerPhone: { type: String, required: true },
-    totalPrice:{type:Number,require:true}
+    totalPrice:{type:Number,required:true}
   },
   
   { timestamps: true }
