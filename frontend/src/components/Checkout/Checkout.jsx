@@ -29,13 +29,13 @@ const Checkout = () => {
   const location = useSelector((state) => {
     return state.location.location;
   });
-  const token = useSelector((state) => state.auth.token)
+  const token = useSelector((state) => state.auth.token);
   const [payMehod, setPayMethod] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [nearestLocation, setNearestLocation] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: "", lng: "" });
-
+  const [errorMessage, setErrorMessage] = useState("");
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0
@@ -71,34 +71,36 @@ const Checkout = () => {
   const handleChange = (event) => {
     setPayMethod(event.target.value);
   };
-  
+
   //!!=====pay with cash function=====
   const payCash = () => {
- const productsForOrder = cartItems.map(item => ({
-  name: item.product.name,
-  price: item.product.price,
-  quantity: item.quantity,
-}));
+    const productsForOrder = cartItems.map((item) => ({
+      name: item.product.name,
+      price: item.product.price,
+      quantity: item.quantity,
+    }));
 
-  axios
-    .post(
-      "http://localhost:5000/order",
-      {
-        products: productsForOrder,
-        address: nearestLocation, 
-        status: "Completed",
-        paymentMethod: "cash",
-      },
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
-    .then((res) => {
-      console.log("Cash order created:", res.data);
-    })
-    .catch((err) => {
-      console.error("Error creating cash order:", err);
-    });
-};
-
+    axios
+      .post(
+        "http://localhost:5000/order",
+        {
+          products: productsForOrder,
+          address: nearestLocation,
+          status: "Completed",
+          paymentMethod: "cash",
+          customerName: name,
+          customerPhone: phone,
+          totalPrice: totalPrice,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        console.log("Cash order created:", res.data);
+      })
+      .catch((err) => {
+        console.error("Error creating cash order:", err);
+      });
+  };
 
   return (
     <Box sx={{ padding: "20px", minHeight: "80vh" }}>
@@ -180,9 +182,17 @@ const Checkout = () => {
                     },
                     transition: "all 0.2s ease-in-out",
                   }}
-                  onClick={()=>{
-                    if (payMehod==="cash") {
-                      payCash()
+                  onClick={() => {
+                    if (!name || !phone) {
+                      setErrorMessage(
+                        "Please enter your NAME and PHONE NUMBER before proceeding."
+                      );
+                      return;
+                    }
+
+                    setErrorMessage("");
+                    if (payMehod === "cash") {
+                      payCash();
                     }
                   }}
                 >
@@ -190,6 +200,9 @@ const Checkout = () => {
                 </Button>
               </Box>
             </Box>
+            {errorMessage && (
+              <Box sx={{ color: "red", mt: 1, mb: 1 }}>{errorMessage}</Box>
+            )}
           </Paper>
         </Grid>
         {/* Order Summary */}

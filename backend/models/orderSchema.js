@@ -14,8 +14,11 @@ const orderSchema = new mongoose.Schema(
     paymentStatus: { type: String, default: "pending" },
     paymentIntentId: { type: String },
     address: { type: String, required: true },
-    paymentMethod: { type: String, required: true },
+    paymentMethod: { type: String, required: true },customerName: { type: String, required: true },
+    customerPhone: { type: String, required: true },
+    totalPrice:{type:Number,require:true}
   },
+  
   { timestamps: true }
 );
 

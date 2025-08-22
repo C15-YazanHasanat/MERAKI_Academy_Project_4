@@ -3,19 +3,31 @@ const OrderModel = require("../models/orderSchema");
 // Create new order
 const createOrder = (req, res) => {
   const userId = req.user.userId;
-  const { products, address, paymentMethod,status, paymentIntentId } = req.body;
+  const {
+    products,
+    address,
+    paymentMethod,
+    status,
+    customerName,
+    customerPhone,
+    paymentIntentId,
+    totalPrice,
+  } = req.body;
 
   if (!products || products.length === 0)
     return res.status(400).json({ message: "No products in order" });
 
   const order = new OrderModel({
     user: userId,
-    products, 
+    products,
     address,
     paymentMethod,
     status,
+    customerName,
+    customerPhone,
     paymentStatus: "succeeded",
     paymentIntentId,
+    totalPrice,
   });
 
   order
