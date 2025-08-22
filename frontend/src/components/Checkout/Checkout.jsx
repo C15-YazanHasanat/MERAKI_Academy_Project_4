@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   Typography,
   TextField,
@@ -10,6 +12,11 @@ import {
   Divider,
   CardMedia,
 } from "@mui/material";
+import PaymentPage from "./checkOutStripe";
+import axios from "axios";
+const stripePromise = loadStripe(
+  "pk_test_51RyfsFLLQTwwlxUp76qZYV8cVHCCLqef2qDqYuqXLZgG6QOzgrIubayS7vZ0ltERvP6Bt3BO8sDb0r16b1Se4deo00T09HbYDI"
+);
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -33,6 +40,22 @@ const Checkout = () => {
       setCoordinates(location.coordinates || { lat: "", lng: "" });
     }
   }, [location]);
+
+  //!! ========get client secret=======
+  const [clientSecret, setClientSecret] = useState("");
+  const GetClientSecret = () => {
+    axios.post("", { amount: totalPrice * 100 }).then((res)=>{
+      setClientSecret(res.data.clientSecret)
+    }).catch((err)=>{
+      console.log(err);
+      
+    })
+  };
+  useEffect(() => {
+  if (totalPrice > 0) {
+    GetClientSecret();
+  }
+}, [totalPrice]);
   return (
     <Box sx={{ padding: "20px", minHeight: "80vh" }}>
       <Typography variant="h4" gutterBottom>
@@ -42,7 +65,7 @@ const Checkout = () => {
       <Grid
         container
         spacing={4}
-        justifyContent="center" 
+        justifyContent="center"
         alignItems="flex-start"
       >
         {/* Shipping Info */}
@@ -75,6 +98,9 @@ const Checkout = () => {
                 Coordinates: {coordinates.lat}, {coordinates.lng}
               </Typography>
             </Box>
+            <Elements stripe={stripePromise} options={"4+5+952+625+"}>
+              <PaymentPage />
+            </Elements>
             <Button
               variant="contained"
               color="primary"
