@@ -1,10 +1,9 @@
 const OrderModel = require("../models/orderSchema");
 
-
 // Create new order
 const createOrder = (req, res) => {
   const userId = req.user.userId;
-  const { products, address, paymentMethod } = req.body;
+  const { products, address, paymentMethod, paymentIntentId } = req.body;
 
   if (!products || products.length === 0)
     return res.status(400).json({ message: "No products in order" });
@@ -14,14 +13,21 @@ const createOrder = (req, res) => {
     products, 
     address,
     paymentMethod,
+    paymentStatus: "succeeded",
+    paymentIntentId,
+    createdAt: new Date(),
   });
 
   order
     .save()
-    .then((order) => order.populate("products.product", "name price images"))
-    .then((order) => res.status(201).json({ message: "Order created", order }))
+    .then(() =>
+      res.status(201).json({
+        message: "Order created",
+      })
+    )
     .catch((err) => res.status(500).json({ message: err.message }));
 };
+
 // Get all orders for logged in user
 const getOrders = (req, res) => {
   const userId = req.user.userId;
@@ -29,7 +35,8 @@ const getOrders = (req, res) => {
   OrderModel.find({ user: userId })
     .populate("products.product", "name price images")
     .then((orders) => {
-      if (!orders.length) return res.status(404).json({ message: "No orders found" });
+      if (!orders.length)
+        return res.status(404).json({ message: "No orders found" });
       res.json(orders);
     })
     .catch((err) => res.status(500).json({ message: err.message }));

@@ -10,9 +10,11 @@ const orderSchema = new mongoose.Schema(
         price: { type: Number, required: true },
       }
     ],
-    status: { type: String, default: "Pending" },
+    status: { type: String, default: "Pending" },  
+    paymentStatus: { type: String, default: "pending" }, 
+    paymentIntentId: { type: String }, 
     address: { type: String, required: true },
-    paymentMethod: { type: String, required: true },
+    paymentMethod: { type: String, required: true }, 
   },
   { timestamps: true }
 );

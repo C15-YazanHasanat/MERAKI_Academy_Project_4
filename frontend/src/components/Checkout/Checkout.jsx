@@ -11,6 +11,11 @@ import {
   Paper,
   Divider,
   CardMedia,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormLabel,
+  FormControl,
 } from "@mui/material";
 import PaymentPage from "./checkOutStripe";
 import axios from "axios";
@@ -24,7 +29,7 @@ const Checkout = () => {
   const location = useSelector((state) => {
     return state.location.location;
   });
-
+  const [payMehod, setPayMethod] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [nearestLocation, setNearestLocation] = useState("");
@@ -44,18 +49,27 @@ const Checkout = () => {
   //!! ========get client secret=======
   const [clientSecret, setClientSecret] = useState("");
   const GetClientSecret = () => {
-    axios.post("", { amount: totalPrice * 100 }).then((res)=>{
-      setClientSecret(res.data.clientSecret)
-    }).catch((err)=>{
-      console.log(err);
-      
-    })
+    axios
+      .post("http://localhost:5000/api/create-payment-intent", {
+        amount: totalPrice * 100,
+      })
+      .then((res) => {
+        setClientSecret(res.data.clientSecret);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   useEffect(() => {
-  if (totalPrice > 0) {
-    GetClientSecret();
-  }
-}, [totalPrice]);
+    if (totalPrice > 0) {
+      GetClientSecret();
+    }
+  }, [totalPrice]);
+  const handleChange = (event) => {
+    setPayMethod(event.target.value);
+  };
+  console.log(payMehod);
+
   return (
     <Box sx={{ padding: "20px", minHeight: "80vh" }}>
       <Typography variant="h4" gutterBottom>
@@ -98,26 +112,49 @@ const Checkout = () => {
                 Coordinates: {coordinates.lat}, {coordinates.lng}
               </Typography>
             </Box>
-            <Elements stripe={stripePromise} options={"4+5+952+625+"}>
-              <PaymentPage />
-            </Elements>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{
-                mt: 2,
-                width: "200px",
-                ":hover": {
-                  backgroundColor: "#fff",
-                  color: "blue",
-                  transform: "scale(1.05)",
-                },
-                transition: "all 0.2s ease-in-out",
-              }}
+            <Box
+              sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }}
             >
-              pay now
-            </Button>
+              <FormControl>
+                <FormLabel sx={{ fontSize: "20px" }}>Payment Method</FormLabel>
+                <RadioGroup value={payMehod} onChange={handleChange}>
+                  <FormControlLabel
+                    value=" "
+                    control={<Radio />}
+                    label="Cash on Delivery"
+                  />
+                  <FormControlLabel
+                    value="card"
+                    control={<Radio />}
+                    label="Pay by card"
+                  />
+                </RadioGroup>
+              </FormControl>
+              {payMehod === "card" && clientSecret && (
+                <Elements stripe={stripePromise} options={{ clientSecret }}>
+                  <PaymentPage />
+                </Elements>
+              )}
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{
+                    mt: 2,
+                    width: "200px",
+                    ":hover": {
+                      backgroundColor: "#fff",
+                      color: "blue",
+                      transform: "scale(1.05)",
+                    },
+                    transition: "all 0.2s ease-in-out",
+                  }}
+                >
+                  pay now
+                </Button>
+              </Box>
+            </Box>
           </Paper>
         </Grid>
         {/* Order Summary */}
