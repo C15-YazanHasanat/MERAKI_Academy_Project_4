@@ -29,6 +29,7 @@ const Checkout = () => {
   const location = useSelector((state) => {
     return state.location.location;
   });
+  const token = useSelector((state) => state.auth.token)
   const [payMehod, setPayMethod] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -65,10 +66,39 @@ const Checkout = () => {
       GetClientSecret();
     }
   }, [totalPrice]);
+
+  //!!=====select pay method======
   const handleChange = (event) => {
     setPayMethod(event.target.value);
   };
-  console.log(payMehod);
+  
+  //!!=====pay with cash function=====
+  const payCash = () => {
+ const productsForOrder = cartItems.map(item => ({
+  name: item.product.name,
+  price: item.product.price,
+  quantity: item.quantity,
+}));
+
+  axios
+    .post(
+      "http://localhost:5000/order",
+      {
+        products: productsForOrder,
+        address: nearestLocation, 
+        status: "Completed",
+        paymentMethod: "cash",
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+    .then((res) => {
+      console.log("Cash order created:", res.data);
+    })
+    .catch((err) => {
+      console.error("Error creating cash order:", err);
+    });
+};
+
 
   return (
     <Box sx={{ padding: "20px", minHeight: "80vh" }}>
@@ -119,7 +149,7 @@ const Checkout = () => {
                 <FormLabel sx={{ fontSize: "20px" }}>Payment Method</FormLabel>
                 <RadioGroup value={payMehod} onChange={handleChange}>
                   <FormControlLabel
-                    value=" "
+                    value="cash"
                     control={<Radio />}
                     label="Cash on Delivery"
                   />
@@ -149,6 +179,11 @@ const Checkout = () => {
                       transform: "scale(1.05)",
                     },
                     transition: "all 0.2s ease-in-out",
+                  }}
+                  onClick={()=>{
+                    if (payMehod==="cash") {
+                      payCash()
+                    }
                   }}
                 >
                   pay now

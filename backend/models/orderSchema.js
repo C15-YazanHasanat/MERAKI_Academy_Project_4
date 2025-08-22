@@ -5,16 +5,16 @@ const orderSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     products: [
       {
-        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
-        quantity: { type: Number, required: true },
+        name: { type: String, required: true },
         price: { type: Number, required: true },
+        quantity: { type: Number, required: true },
       }
     ],
-    status: { type: String, default: "Pending" },  
-    paymentStatus: { type: String, default: "pending" }, 
-    paymentIntentId: { type: String }, 
+    status: { type: String},
+    paymentStatus: { type: String, default: "pending" },
+    paymentIntentId: { type: String },
     address: { type: String, required: true },
-    paymentMethod: { type: String, required: true }, 
+    paymentMethod: { type: String, required: true },
   },
   { timestamps: true }
 );
