@@ -53,19 +53,25 @@ const getOrders = (req, res) => {
     })
     .catch((err) => res.status(500).json({ message: err.message }));
 };
-
-// Get order by ID
-const getOrderById = (req, res) => {
+//!======get my orders========
+const getMyOrders = (req, res) => {
   const userId = req.user.userId;
+console.log(userId);
 
-  OrderModel.findOne({ _id: req.params.id, user: userId })
-    .populate("products.product", "name price images")
-    .then((order) => {
-      if (!order) return res.status(404).json({ message: "Order not found" });
-      res.json(order);
+  OrderModel.find({ user: userId })
+    .then((orders) => {
+      if (!orders.length) {
+        return res
+          .status(404)
+          .json({ success: false, message: "No orders found", orders: [] });
+      }
+      res.status(200).json({ success: true, orders });
     })
-    .catch((err) => res.status(500).json({ message: err.message }));
+    .catch((err) =>
+      res.status(500).json({ success: false, message: "Server Error", err: err.message })
+    );
 };
+
 
 // Update order status (Admin only)
 const updateOrderStatus = (req, res) => {
@@ -83,4 +89,4 @@ const updateOrderStatus = (req, res) => {
     .catch((err) => res.status(500).json({ message: err.message }));
 };
 
-module.exports = { createOrder, getOrders, getOrderById, updateOrderStatus };
+module.exports = { createOrder, getOrders, updateOrderStatus,getMyOrders };

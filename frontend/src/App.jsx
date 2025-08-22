@@ -11,7 +11,7 @@ import AdminDashboard from "./components/auth/AdminDashboard";
 import Navbar from "./components/auth/Navbar";
 import CategoryList from "./components/categories/CategoryList";
 import ChatPage from "./components/chatPage/ChatPage";
-import Account from "./components/TobBAr files/Account";
+import Account from "./components/auth/Account";
 import AboutUS from "./components/TobBAr files/about";
 import Blog from "./components/TobBAr files/Blog";
 import ContactUs from "./components/TobBAr files/ContactUs";

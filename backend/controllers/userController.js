@@ -61,7 +61,7 @@ const login = (req, res) => {
             message: `The email doesn't exist or The password you’ve entered is incorrect`,
           });
         }
-                
+
         const payload = {
           userId: result._id,
           author: result.firstName,
@@ -77,7 +77,7 @@ const login = (req, res) => {
           success: true,
           message: `Valid login credentials`,
           token: token,
-          userId:result._id,
+          userId: result._id,
           firstName: result.firstName,
         });
       } catch (error) {
@@ -93,7 +93,29 @@ const login = (req, res) => {
     });
 };
 
+//!=======get cuurent user=======
+const getCurrentUser = (req, res) => {
+  const userId = req.user.userId;
+  usersModel
+    .findById(userId)
+    .select("-password -__v")
+    .then((user) => {
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
+      } else {
+        res.status(200).json({ success: true, user: user });
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ success: false, message: "Server Error", err: err.message });
+    });
+};
 module.exports = {
   register,
   login,
+  getCurrentUser,
 };
