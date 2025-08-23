@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 const Account = () => {
   const [user, setUser] = useState({});
-  const [order, setOrder] = useState([]);
+  const [orders, setOrders] = useState([]);
   const token = useSelector((state) => state.auth.token);
 
   //!!=======Get user==========
@@ -36,7 +36,7 @@ const Account = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setOrder(res.data.orders);
+        setOrders(res.data.orders);
       })
       .catch((err) => {
         console.log(err);
@@ -46,9 +46,96 @@ const Account = () => {
     getAllOrders();
     getUser();
   }, []);
+  console.log(orders);
+
   return (
     <Box sx={{ padding: 4 }}>
-      <Paper sx={{ padding: 3, marginBottom: 4 }}>
+      <Box sx={{ display: "flex", textAlign: "left", flexDirection: "column" }}>
+        <Paper>
+          <Typography
+            ml={2}
+            sx={{
+              display: "inline-block",
+              borderBottom: "1px solid black",
+              fontFamily: "sans-serif",
+              fontSize: "20px",
+              textTransform: "uppercase",
+              fontWeight: "600",
+            }}
+          >
+            WELCOM {user.firstName} {user.lastName}
+          </Typography>
+          <List>
+            <ListItem>
+              <ListItemText primary={`E-MAIL : ${user.email}`} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={`AGE : ${user.age} years`} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={`COUNTRY : ${user.country}`} />
+            </ListItem>
+          </List>
+        </Paper>
+      </Box>
+      <Typography variant="h5" gutterBottom sx={{ marginTop: "5px" }}>
+        Your Orders :
+      </Typography>
+
+      {orders.length === 0 ? (
+        <Typography>No orders found.</Typography>
+      ) : (
+        orders.map((order, i) => (
+          <Paper
+            key={i}
+            sx={{
+              padding: 2,
+              marginY: 1,
+              display: "flex",
+              flexDirection: "row",
+              gap: 2,
+              backgroundColor: "rgba(190, 177, 179, 0.87)",
+            }}
+          >
+            <Typography>
+              <span style={{ fontWeight: "bold" }}>NAME :</span>{" "}
+              {order.customerName}
+            </Typography>
+
+            <Typography>
+              <span style={{ fontWeight: "bold" }}>PHONE :</span>{" "}
+              {order.customerPhone}
+            </Typography>
+
+            <Typography>
+              <span style={{ fontWeight: "bold" }}>NERESET LOCATION :</span>{" "}
+              {order.address}
+            </Typography>
+
+            <Typography>
+              <span style={{ fontWeight: "bold" }}>TOTAL PRICE :</span>{" "}
+              {order.totalPrice} $
+            </Typography>
+
+            <Typography>
+              <span style={{ fontWeight: "bold" }}>PAY METHOD :</span>{" "}
+              {order.paymentMethod}
+            </Typography>
+            <Typography><span style={{ fontWeight: "bold" }}>Number Of Products : </span>{order.products.length}</Typography>
+            <Typography>
+              <span style={{ fontWeight: "bold" }}>STATUS :</span>
+              <span style={{ color: "green" }}> {order.status}</span>
+            </Typography>
+          </Paper>
+        ))
+      )}
+    </Box>
+  );
+};
+export default Account;
+/* 
+<Box sx={{display:"flex" , msFlexDirection:"column"}}>
+      <Paper sx={{ padding: 3, marginBottom: 4 ,alignItems:"center"}}>
         <Typography variant="h4" gutterBottom>
           Welcome, {user.firstName} {user.lastName}
         </Typography>
@@ -69,7 +156,7 @@ const Account = () => {
           </Grid>
         </Grid>
       </Paper>
-
+    </Box>
       <Typography variant="h5" gutterBottom>
         Your Orders
       </Typography>
@@ -120,7 +207,7 @@ const Account = () => {
           </Paper>
         ))
       )}
-    </Box>
-  );
-};
-export default Account;
+
+
+
+*/

@@ -86,15 +86,7 @@ export default function PaymentPage() {
   };
   return (
     <div>
-      <PaymentElement
-        options={{
-          defaultValues: {
-            paymentMethod: {
-              savePaymentMethod: false, // ما يعرض خيار الحفظ
-            },
-          },
-        }}
-      />
+      <PaymentElement />
       <Button
         variant="contained"
         color="primary"

@@ -8,7 +8,6 @@ const BottomBar = () => {
 
   return (
     <div className="bottom-bar">
-      {/* روابط أساسية */}
       <div className="bottom-links">
         <span onClick={() => navigate("/")}>
           <FaHome /> Home
@@ -19,10 +18,8 @@ const BottomBar = () => {
         </span>
       </div>
 
-      {/* حقوق الملكية */}
       <div className="bottom-info">© 2025 TECHNEST</div>
 
-      {/* أزرار تفاعلية */}
       <div className="bottom-actions">
         <span onClick={() => navigate("/cart")}>
           <FaShoppingCart /> Cart

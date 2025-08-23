@@ -28,7 +28,7 @@ const Cart = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setCartItem(res.data.products || []);
+        setCartItem(res.data.products);
         dispatch(setCart(res.data.products));
       })
       .catch((err) => {
