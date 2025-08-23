@@ -108,7 +108,7 @@ const Account = () => {
             </Typography>
 
             <Typography>
-              <span style={{ fontWeight: "bold" }}>NERESET LOCATION :</span>{" "}
+              <span style={{ fontWeight: "bold" }}>NEAREST  LOCATION :</span>{" "}
               {order.address}
             </Typography>
 

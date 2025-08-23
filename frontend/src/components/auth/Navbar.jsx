@@ -161,7 +161,7 @@ useEffect(()=>{
             }}
           >
             <FaShoppingCart /> Cart
-            {cartItems.length > 0 && (
+            {isLoggedIn&&cartItems.length > 0 && (
               <p className="cart-count">({cartItems.length})</p>
             )}
           </span>
