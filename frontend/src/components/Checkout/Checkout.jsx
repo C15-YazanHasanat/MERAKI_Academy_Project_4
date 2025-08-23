@@ -26,7 +26,7 @@ const stripePromise = loadStripe(
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  const [cartItems,setCartItems]=useState([])
   console.log(cartItems);
   const location = useSelector((state) => {
     return state.location.location;
@@ -50,7 +50,25 @@ const Checkout = () => {
       setCoordinates(location.coordinates || { lat: "", lng: "" });
     }
   }, [location]);
-
+//!==========get all cart==========
+const getAllCarts = () => {
+    axios
+      .get("http://localhost:5000/carts", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setCartItems(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response?.data?.message === "The token is invalid or expired") {
+          dispatch(setLogout());
+        }
+      });
+  };
+useEffect(()=>{
+    getAllCarts()
+},[])
   //!! ========get client secret=======
   const [clientSecret, setClientSecret] = useState("");
   const GetClientSecret = () => {

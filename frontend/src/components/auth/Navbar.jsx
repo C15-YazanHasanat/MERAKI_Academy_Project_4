@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   FaUser,
   FaSignInAlt,
@@ -13,7 +14,7 @@ import { FaComment } from "react-icons/fa6";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../redux/authSlice";
-
+import { useEffect } from "react";
 const Navbar = () => {
   const [search, setSearch] = useState("");
   const categories = useSelector((state) => state.categories.items);
@@ -22,16 +23,34 @@ const Navbar = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const userName = useSelector((state) => state.auth.userName);
   const product = useSelector((state) => state.product.items);
-const cartItems=useSelector((state)=>{
-  return state.cart.items
-})
+  const [cartItems,setCartItems]=useState([])
+  const token = useSelector((state) => state.auth.token);
+
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const filteredProducts = product.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase())
   );
-
+//!==========get all cart==========
+const getAllCarts = () => {
+    axios
+      .get("http://localhost:5000/carts", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setCartItems(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response?.data?.message === "The token is invalid or expired") {
+          dispatch(setLogout());
+        }
+      });
+  };
+useEffect(()=>{
+    getAllCarts()
+},[])
   return (
     <div className="nav-bar">
       <div className="menu-btn" onClick={() => setSidebarOpen(true)}>
@@ -143,8 +162,8 @@ const cartItems=useSelector((state)=>{
           >
             <FaShoppingCart /> Cart
             {cartItems.length > 0 && (
-      <p className="cart-count">({cartItems.length})</p>
-    )}
+              <p className="cart-count">({cartItems.length})</p>
+            )}
           </span>
 
           {isLoggedIn ? (

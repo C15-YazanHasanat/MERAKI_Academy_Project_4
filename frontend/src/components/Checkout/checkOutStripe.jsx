@@ -6,7 +6,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
-import { Button, Box } from "@mui/material";
+import { Button,Box } from "@mui/material";
 export default function PaymentPage() {
   const stripe = useStripe();
   const elements = useElements();
@@ -76,7 +76,7 @@ export default function PaymentPage() {
                 "Payment successful! Your order has been placed."
               );
               setTimeout(() => setSuccessMessage(""), 4000);
-              setProsccing(true);
+              setProsccing(true)
             })
             .catch((err) => {
               setErrorMessage("Error creating order after payment.");
@@ -107,21 +107,21 @@ export default function PaymentPage() {
         pay now
       </Button>
       {errorMessage && (
-        <Box sx={{ color: "red", mt: 1, mb: 1 }}>{errorMessage}</Box>
-      )}
-      {successMessage && (
-        <Box
-          sx={{
-            mt: 2,
-            p: 2,
-            backgroundColor: "green",
-            color: "white",
-            borderRadius: 1,
-          }}
-        >
-          {successMessage}
-        </Box>
-      )}
+                    <Box sx={{ color: "red", mt: 1, mb: 1 }}>{errorMessage}</Box>
+                  )}
+                  {successMessage && (
+                    <Box
+                      sx={{
+                        mt: 2,
+                        p: 2,
+                        backgroundColor: "green",
+                        color: "white",
+                        borderRadius: 1,
+                      }}
+                    >
+                      {successMessage}
+                    </Box>
+                  )}
     </div>
   );
 }
