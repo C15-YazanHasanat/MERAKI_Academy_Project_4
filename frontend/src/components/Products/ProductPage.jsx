@@ -96,7 +96,7 @@ const fetchProductById = (productId) => {
           <Card>
             <CardMedia
               component="img"
-              height="300"
+              height="350"
               image={mainImage}
               alt={product.name}
             />

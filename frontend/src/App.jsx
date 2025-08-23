@@ -44,8 +44,6 @@ const App = () => {
          <Route path="*" element={<h2>404 Not Found</h2>} />
          <Route path="/getAddress" element={<GetAddress/>}/>
       </Routes>
-        {/* <BottomBar/> */}
-
     </div>
   );
 };
