@@ -56,7 +56,6 @@ const getOrders = (req, res) => {
 //!======get my orders========
 const getMyOrders = (req, res) => {
   const userId = req.user.userId;
-console.log(userId);
 
   OrderModel.find({ user: userId })
     .then((orders) => {
