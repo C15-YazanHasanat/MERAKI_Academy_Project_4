@@ -1,4 +1,4 @@
-import { setLogin, setUserId,setUserName } from "../redux/authSlice";
+import { setLogin, setUserId,setUserName,setRole } from "../redux/authSlice";
 import React, { useState } from "react";
 import './Register.css';
 
@@ -28,6 +28,8 @@ const login = async (e) => {
         password,
       });
       if (result.data) {
+        console.log(result.data);
+        
         setMessage(""); 
         dispatch(setLogin(result.data.token))
         dispatch(setUserId(result.data.userId))

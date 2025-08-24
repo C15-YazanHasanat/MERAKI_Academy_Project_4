@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   PaymentElement,
@@ -6,10 +6,10 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { clearCart } from "../redux/cartSlice";
-import { useSelector,useDispatch } from "react-redux";
-import { Button,Box } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { Button, Box } from "@mui/material";
 export default function PaymentPage() {
-    const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -44,16 +44,19 @@ export default function PaymentPage() {
         console.log(err);
       });
   };
-  //!=============handle Card Payment======
-  const handleCardPayment = () => {
-    
-    if (!stripe || !elements) return;
+  useEffect(()=>{
     if (!name || !phone) {
       setErrorMessage(
         "Please enter your NAME and PHONE NUMBER before proceeding."
       );
       return;
     }
+  },[])
+  
+  //!=============handle Card Payment======
+  const handleCardPayment = () => {
+    if (!stripe || !elements) return;
+    
 
     setErrorMessage("");
     stripe
@@ -93,8 +96,8 @@ export default function PaymentPage() {
                 "Payment successful! Your order has been placed."
               );
               setTimeout(() => setSuccessMessage(""), 4000);
-              setProsccing(true)
-              clearAllCart()
+              setProsccing(true);
+              clearAllCart();
             })
             .catch((err) => {
               setErrorMessage("Error creating order after payment.");
@@ -102,7 +105,7 @@ export default function PaymentPage() {
         }
       });
   };
-  
+
   return (
     <div>
       <PaymentElement />
@@ -126,21 +129,21 @@ export default function PaymentPage() {
         pay now
       </Button>
       {errorMessage && (
-                    <Box sx={{ color: "red", mt: 1, mb: 1 }}>{errorMessage}</Box>
-                  )}
-                  {successMessage && (
-                    <Box
-                      sx={{
-                        mt: 2,
-                        p: 2,
-                        backgroundColor: "green",
-                        color: "white",
-                        borderRadius: 1,
-                      }}
-                    >
-                      {successMessage}
-                    </Box>
-                  )}
+        <Box sx={{ color: "red", mt: 1, mb: 1 }}>{errorMessage}</Box>
+      )}
+      {successMessage && (
+        <Box
+          sx={{
+            mt: 2,
+            p: 2,
+            backgroundColor: "green",
+            color: "white",
+            borderRadius: 1,
+          }}
+        >
+          {successMessage}
+        </Box>
+      )}
     </div>
   );
 }

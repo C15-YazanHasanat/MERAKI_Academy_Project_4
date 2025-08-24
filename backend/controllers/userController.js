@@ -79,6 +79,7 @@ const login = (req, res) => {
           token: token,
           userId: result._id,
           firstName: result.firstName,
+          role: result.role.role,
         });
       } catch (error) {
         throw new Error(error.message);

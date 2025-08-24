@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   country: { type: String },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
+  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role",default: "689ddc25a2fad2cd4bb0ff88" },
 });
 
 userSchema.pre("save", async function () {

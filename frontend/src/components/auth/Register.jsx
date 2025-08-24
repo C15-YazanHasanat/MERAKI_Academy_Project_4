@@ -32,6 +32,8 @@ const Register = () => {
       .then((res) => {
         setStatus(true);
         setMessage(res.data.message);
+        console.log(res.data);
+        
         
       })
       .catch((err) => {
