@@ -25,7 +25,8 @@ const Navbar = () => {
   const product = useSelector((state) => state.product.items);
   const cartItems = useSelector((state) => state.cart.items);
   const token = useSelector((state) => state.auth.token);
-
+  const role = useSelector((state) => state.auth.role);
+  console.log(role);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -131,10 +132,15 @@ const Navbar = () => {
             <span
               className="user-name"
               onClick={() => {
-                navigate("/account");
+                if (role === "Admin") {
+                  navigate("/admin");
+                } else {
+                  navigate("/account");
+                }
               }}
             >
-              <FaUser /> Welcome {userName}
+              <FaUser /> Welcome {role === "Admin" ? "Admin " : ""}
+              {userName}
             </span>
           )}
           <span
@@ -143,7 +149,7 @@ const Navbar = () => {
             }}
           >
             <FaShoppingCart /> Cart
-            {isLoggedIn&&cartItems.length > 0 && (
+            {isLoggedIn && cartItems.length > 0 && (
               <p className="cart-count">({cartItems.length})</p>
             )}
           </span>

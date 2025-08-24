@@ -82,7 +82,7 @@ const CategoryPage = () => {
           position: "sticky",
           top: 20,
           height: "fit-content",
-          backgroundColor:"rgba(240, 234, 234, 1)"
+          backgroundColor:"rgba(234, 240, 240, 1)"
         }}
       >
         <Typography variant="h6" gutterBottom>

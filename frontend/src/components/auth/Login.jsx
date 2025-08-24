@@ -34,6 +34,7 @@ const login = async (e) => {
         dispatch(setLogin(result.data.token))
         dispatch(setUserId(result.data.userId))
         dispatch(setUserName(result.data.firstName))
+        dispatch(setRole(result.data.role))
         navigate("/");
       } else throw Error;
     } catch (error) {
