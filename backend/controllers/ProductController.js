@@ -7,13 +7,13 @@ const getProducts = (req, res) => {
     .find()
     .populate("category", "name")
     .then((product) => {
-      if (product.length>0) {
+      if (product.length > 0) {
         res.status(200).json({
           success: true,
           message: `All the products`,
           product: product,
         });
-      }else{
+      } else {
         res.status(404).json({
           success: false,
           message: `No Products Yet`,
@@ -47,7 +47,8 @@ const getProductById = (req, res) => {
 const getProductsByCategory = (req, res) => {
   const { categoryId } = req.params;
 
-  productModel.find({ category: categoryId })
+  productModel
+    .find({ category: categoryId })
     .populate("category", "name")
     .then((products) => {
       if (!products.length) {
@@ -63,16 +64,18 @@ const getProductsByCategory = (req, res) => {
 // !!========Create Product=======
 
 const createProduct = (req, res) => {
-  const { name, description, price, category, images, stock, isFeatured } =
+  const { name, description, price, category, stock, isFeatured } =
     req.body;
+  const images = req.files ? req.files.map((file) => file.path) : [];
+
   const product = new productModel({
     name,
     description,
     price,
     category,
-    images,
     stock,
     isFeatured,
+    images,
   });
 
   product
@@ -104,12 +107,13 @@ const updateProduct = (req, res) => {
 
       const { name, description, price, category, images, stock, isFeatured } =
         req.body;
-
+  if (req.files && req.files.length > 0) {
+        product.images = req.files.map((file) => file.path);
+      }
       product.name = name || product.name;
       product.description = description || product.description;
       product.price = price ?? product.price;
       product.category = category || product.category;
-      product.images = images || product.images;
       product.stock = stock ?? product.stock;
       product.isFeatured = isFeatured ?? product.isFeatured;
 
@@ -138,5 +142,6 @@ module.exports = {
   createProduct,
   getProductById,
   updateProduct,
-  deleteProduct,getProductsByCategory
+  deleteProduct,
+  getProductsByCategory,
 };

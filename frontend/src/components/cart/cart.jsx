@@ -12,7 +12,7 @@ import {
   Divider,
   Box,
 } from "@mui/material";
-import { setCart } from "../redux/cartSlice";
+import { setCart,removeFromCart } from "../redux/cartSlice";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import { setLogout } from "../redux/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -54,6 +54,7 @@ const Cart = () => {
       .then((res) => {
         if (res.data.cart) {
           setCartItem(res.data.cart.products);
+          dispatch(removeFromCart(productId))
         } else {
           setCartItem([]);
         }

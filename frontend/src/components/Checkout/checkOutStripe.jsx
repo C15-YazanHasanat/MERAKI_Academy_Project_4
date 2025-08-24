@@ -16,6 +16,8 @@ export default function PaymentPage() {
   const [prosccing, setProsccing] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const name = useSelector((state) => {
     return state.order.name;
   });
@@ -27,10 +29,7 @@ export default function PaymentPage() {
     return state.location.location;
   });
   const token = useSelector((state) => state.auth.token);
-  const totalPrice = cartItems.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  );
+
   //!=========clear all cart==========
   const clearAllCart = () => {
     axios
@@ -44,20 +43,24 @@ export default function PaymentPage() {
         console.log(err);
       });
   };
-  useEffect(()=>{
+  useEffect(() => {
     if (!name || !phone) {
       setErrorMessage(
         "Please enter your NAME and PHONE NUMBER before proceeding."
       );
       return;
     }
-  },[])
-  
+  }, []);
+  useEffect(() => {
+  const newTotal = cartItems.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
+  setTotalPrice(newTotal);
+}, [cartItems]);
   //!=============handle Card Payment======
   const handleCardPayment = () => {
     if (!stripe || !elements) return;
-    
-
     setErrorMessage("");
     stripe
       .confirmPayment({

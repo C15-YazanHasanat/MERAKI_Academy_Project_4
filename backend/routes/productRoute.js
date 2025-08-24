@@ -10,14 +10,16 @@ const {
 const authorization = require("../middleware/authorization");
 const productRouter = express.Router();
 const upload = require("../config/multer");
+const authentication = require("../middleware/authentication");
 
 productRouter.get("/category/:categoryId", getProductsByCategory);
 // path==>http://localhost:5000/products/category/:categoryId
 
 productRouter.post(
   "/",
-  authorization("CREATE_PRODUCTS"),
-  upload.single("image"),
+  authentication,                
+  authorization("CREATE_PRODUCTS"), 
+  upload.array("images", 5),    
   createProduct
 );
 // path==>http://localhost:5000/products
@@ -28,11 +30,11 @@ productRouter.get("/:id", getProductById);
 productRouter.put(
   "/:id",
   authorization("EDIT_PRODUCTS"),
-  upload.single("image"),
+  upload.array("images",5),
   updateProduct
 );
 // path==>http://localhost:5000/products/:id
-productRouter.delete("/:id", authorization("DELETE_PRODUCTS"), deleteProduct);
+productRouter.delete("/:id",  deleteProduct);
 // path==>http://localhost:5000/products/:id
 
 module.exports = productRouter;
