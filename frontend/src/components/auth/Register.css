@@ -1,6 +1,7 @@
 .SuccessMessage {
-  width: 350px;
+  width: 330px;
   height: 60px;
+  align-items: center;
   background-color: rgb(189, 255, 189);
   color: rgb(73, 97, 31);
   font-size: 18px;

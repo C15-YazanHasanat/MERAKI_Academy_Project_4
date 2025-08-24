@@ -25,6 +25,25 @@ const ProductPage = () => {
   const token = useSelector((state) => {
     return state.auth.token;
   });
+  //!==========get all cart==========
+const getAllCarts = () => {
+    axios
+      .get("http://localhost:5000/carts", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setCartItems(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response?.data?.message === "The token is invalid or expired") {
+          dispatch(setLogout());
+        }
+      });
+  };
+useEffect(()=>{
+    getAllCarts()
+},[])
   // !!--- Function to fetch product by ID ---
 const fetchProductById = (productId) => {
   setLoading(true);
@@ -81,6 +100,7 @@ const fetchProductById = (productId) => {
         dispatch(addToCart({ product: product, quantity: 1 }));;
         setMessageCart(true);
         setTimeout(() => setMessageCart(null), 2000);
+        getAllCarts()
       })
       .catch((err) => {
         console.log(err.response.data.message);

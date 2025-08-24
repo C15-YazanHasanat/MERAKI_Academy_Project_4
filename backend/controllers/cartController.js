@@ -17,12 +17,13 @@ const getCart = (req, res) => {
 const addToCart = (req, res) => {
   const userId = req.user.userId;
   const { productId, quantity } = req.body;
-if (!userId) {
-      return res.status(401).json({ message:"You have to login" });
-    }
+  if (!userId) {
+    return res.status(401).json({ message: "You have to login" });
+  }
   ProductModel.findById(productId)
     .then((product) => {
-      if (!product) return res.status(404).json({ message: "Product not found" });
+      if (!product)
+        return res.status(404).json({ message: "Product not found" });
 
       return CartModel.findOne({ user: userId }).then((cart) => {
         if (!cart) {
@@ -88,19 +89,39 @@ const removeFromCart = (req, res) => {
       );
 
       if (cart.products.length === 0) {
-        return cart.deleteOne().then(() => 
-          res.json({ message: "Cart is now empty and removed" })
-        );
+        return cart
+          .deleteOne()
+          .then(() => res.json({ message: "Cart is now empty and removed" }));
       }
 
-      return cart.save().then((cart) =>
-        cart.populate("products.product", "name price images")
-      );
+      return cart
+        .save()
+        .then((cart) => cart.populate("products.product", "name price images"));
     })
     .then((cart) => {
       if (cart) res.json({ message: "Item removed", cart });
     })
     .catch((err) => res.status(500).json({ message: err.message }));
 };
+// remove all cart
+const clearCart = (req, res) => {
+  const userId = req.user.userId;
 
-module.exports = { getCart, addToCart, updateCartItem, removeFromCart };
+  CartModel.findOne({ user: userId })
+    .then((cart) => {
+      if (!cart)
+        return res.status(404).json({ message: "Cart is already empty" });
+
+      return cart
+        .deleteOne()
+        .then(() => res.json({ message: "Cart cleared successfully" }));
+    })
+    .catch((err) => res.status(500).json({ message: err.message }));
+};
+module.exports = {
+  getCart,
+  addToCart,
+  updateCartItem,
+  removeFromCart,
+  clearCart,
+};

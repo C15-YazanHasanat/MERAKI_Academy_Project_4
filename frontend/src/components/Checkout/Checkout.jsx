@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { setTheName, setThePhone } from "../redux/ordersSlice";
+import { clearCart } from "../redux/cartSlice";
 import {
   Typography,
   TextField,
@@ -26,7 +27,7 @@ const stripePromise = loadStripe(
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const [cartItems,setCartItems]=useState([])
+  const [cartItems, setCartItems] = useState([]);
   console.log(cartItems);
   const location = useSelector((state) => {
     return state.location.location;
@@ -50,8 +51,8 @@ const Checkout = () => {
       setCoordinates(location.coordinates || { lat: "", lng: "" });
     }
   }, [location]);
-//!==========get all cart==========
-const getAllCarts = () => {
+  //!==========get all cart==========
+  const getAllCarts = () => {
     axios
       .get("http://localhost:5000/carts", {
         headers: { Authorization: `Bearer ${token}` },
@@ -66,9 +67,23 @@ const getAllCarts = () => {
         }
       });
   };
-useEffect(()=>{
-    getAllCarts()
-},[])
+  useEffect(() => {
+    getAllCarts();
+  }, []);
+
+  //!=========clear all cart==========
+  const clearAllCart = () => {
+    axios
+      .delete("http://localhost:5000/carts/clear", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        dispatch(clearCart());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   //!! ========get client secret=======
   const [clientSecret, setClientSecret] = useState("");
   const GetClientSecret = () => {
@@ -117,12 +132,12 @@ useEffect(()=>{
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
-        console.log("Cash order created:", res.data);
         setSuccessMessage("Payment successful! Your order has been placed.");
         setTimeout(() => {
           setSuccessMessage("");
         }, 4000);
         setProsccing(true);
+        clearAllCart();
       })
       .catch((err) => {
         console.error("Error creating cash order:", err);
@@ -260,8 +275,7 @@ useEffect(()=>{
           <Paper
             sx={{
               padding: 2,
-              width: "400px",
-              height: "400px",
+              width: "430px",
               backgroundColor: "rgb(223, 229, 234)",
             }}
           >

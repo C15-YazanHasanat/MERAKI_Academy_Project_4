@@ -4,15 +4,14 @@ const {
   addToCart,
   updateCartItem,
   removeFromCart,
+  clearCart,
 } = require("../controllers/cartController");
 
-const  authentication  = require("../middleware/authentication"); 
+const authentication = require("../middleware/authentication");
 
 const cartRouter = express.Router();
 
-
 cartRouter.use(authentication);
-
 
 cartRouter.get("/", getCart);
 //path==>http://localhost:5000/carts
@@ -20,12 +19,13 @@ cartRouter.get("/", getCart);
 cartRouter.post("/add", addToCart);
 //path==>http://localhost:5000/carts/add
 
-
 cartRouter.put("/update", updateCartItem);
 //path==>http://localhost:5000/carts/update
 
-
 cartRouter.delete("/delete", removeFromCart);
 //path==>http://localhost:5000/carts/delete
+
+cartRouter.delete("/clear",clearCart)
+//path==>http://localhost:5000/carts/clear
 
 module.exports = cartRouter;

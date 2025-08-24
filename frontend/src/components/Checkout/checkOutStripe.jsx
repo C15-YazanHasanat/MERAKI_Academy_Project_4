@@ -5,9 +5,12 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { useSelector } from "react-redux";
+import { clearCart } from "../redux/cartSlice";
+import { useSelector,useDispatch } from "react-redux";
 import { Button,Box } from "@mui/material";
 export default function PaymentPage() {
+    const dispatch=useDispatch()
+
   const stripe = useStripe();
   const elements = useElements();
   const [prosccing, setProsccing] = useState(false);
@@ -28,8 +31,22 @@ export default function PaymentPage() {
     (sum, item) => sum + item.product.price * item.quantity,
     0
   );
+  //!=========clear all cart==========
+  const clearAllCart = () => {
+    axios
+      .delete("http://localhost:5000/carts/clear", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        dispatch(clearCart());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   //!=============handle Card Payment======
   const handleCardPayment = () => {
+    
     if (!stripe || !elements) return;
     if (!name || !phone) {
       setErrorMessage(
@@ -77,6 +94,7 @@ export default function PaymentPage() {
               );
               setTimeout(() => setSuccessMessage(""), 4000);
               setProsccing(true)
+              clearAllCart()
             })
             .catch((err) => {
               setErrorMessage("Error creating order after payment.");
@@ -84,6 +102,7 @@ export default function PaymentPage() {
         }
       });
   };
+  
   return (
     <div>
       <PaymentElement />
