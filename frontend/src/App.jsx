@@ -7,7 +7,7 @@ import ProductPage from "./components/Products/ProductPage";
 import Cart from "./components/cart/cart";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import AdminDashboard from "./components/auth/AdminDashboard";
+import AdminDashboard from "./components/admin/AdminDashboard";
 import Navbar from "./components/auth/Navbar";
 import CategoryList from "./components/categories/CategoryList";
 import ChatPage from "./components/chatPage/ChatPage";

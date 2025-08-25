@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -11,14 +11,14 @@ import {
   FormControl,
   Checkbox,
   FormControlLabel,
-  Grid,
   Paper,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const AdminDashboard = () => {
+const ProductDashBoard = () => {
   const token = useSelector((state) => state.auth.token);
-  const [categories, setCategories] = useState([]);
+  const categories = useSelector((state) => state.categories.items);
+
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -27,16 +27,10 @@ const AdminDashboard = () => {
     stock: "",
     isFeatured: false,
   });
+
   const [images, setImages] = useState([]);
   const [preview, setPreview] = useState([]);
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/category")
-      .then((res) => setCategories(res.data))
-      .catch((err) => console.log(err));
-  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -49,33 +43,39 @@ const AdminDashboard = () => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files);
-
-    const previewUrls = files.map((file) => URL.createObjectURL(file));
-    setPreview(previewUrls);
+    setPreview(files.map((file) => URL.createObjectURL(file)));
   };
 
+  const uploadImages = () => {
+    const uploaders = images.map((image) => {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "tecknest");
+      data.append("cloud_name", "dv2a5welg");
+
+      return axios
+        .post("https://api.cloudinary.com/v1_1/dv2a5welg/image/upload", data)
+        .then((res) => res.data.secure_url);
+    });
+    return Promise.all(uploaders);
+  };
+
+  // 🟢 إضافة المنتج
   const handleAddProduct = (e) => {
     e.preventDefault();
-    const { name, price, category, stock } = form;
 
-    if (!name || !price || !category || !stock) {
-      setMessage("Please fill all required fields");
-      return;
-    }
+    uploadImages()
+      .then((imageUrls) => {
+        const productData = {
+          ...form,
+          images: imageUrls,
+        };
 
-    const formData = new FormData();
-    Object.keys(form).forEach((key) => formData.append(key, form[key]));
-    images.forEach((img) => formData.append("images", img));
-
-    axios
-      .post("http://localhost:5000/products", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
+        return axios.post("http://localhost:5000/products", productData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
       })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         setMessage("Product added successfully!");
         setForm({
           name: "",
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
       })
       .catch((err) => {
         console.error(err);
-        setMessage("Error adding product");
+        setMessage("Failed to add product");
       });
   };
 
@@ -99,11 +99,6 @@ const AdminDashboard = () => {
       <Typography variant="h4" mb={3}>
         Admin Dashboard - Add Product
       </Typography>
-      {message && (
-        <Typography color="secondary" mb={2}>
-          {message}
-        </Typography>
-      )}
       <Box
         component="form"
         onSubmit={handleAddProduct}
@@ -166,41 +161,40 @@ const AdminDashboard = () => {
           }
           label="Featured"
         />
-        <Button variant="contained" component="label">
+
+        <Button variant="outlined" component="label">
           Upload Images
           <input
             type="file"
+            hidden
             multiple
             accept="image/*"
             onChange={handleImageChange}
           />
         </Button>
 
-        {preview.length > 0 && (
-          <Grid container spacing={2}>
-            {preview.map((src, i) => (
-              <Grid item key={i}>
-                <img
-                  src={src}
-                  alt={`preview-${i}`}
-                  style={{
-                    width: 80,
-                    height: 80,
-                    objectFit: "cover",
-                    borderRadius: 4,
-                  }}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        )}
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+          {preview.map((src, idx) => (
+            <img
+              key={idx}
+              src={src}
+              alt={`preview-${idx}`}
+              style={{ width: "100px", borderRadius: "8px" }}
+            />
+          ))}
+        </Box>
 
         <Button type="submit" variant="contained" color="primary">
           Add Product
         </Button>
       </Box>
+      {message && (
+        <Typography color="secondary" mt={2}>
+          {message}
+        </Typography>
+      )}
     </Paper>
   );
 };
 
-export default AdminDashboard;
+export default ProductDashBoard;
