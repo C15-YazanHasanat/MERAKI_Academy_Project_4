@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import PaymentPage from "./checkOutStripe";
 import axios from "axios";
+const test=import.meta.env.KEY
 const stripePromise = loadStripe(
   "pk_test_51RyfsFLLQTwwlxUp76qZYV8cVHCCLqef2qDqYuqXLZgG6QOzgrIubayS7vZ0ltERvP6Bt3BO8sDb0r16b1Se4deo00T09HbYDI"
 );
@@ -114,6 +115,7 @@ const Checkout = () => {
       name: item.product.name,
       price: item.product.price,
       quantity: item.quantity,
+      category: item.product.category
     }));
 
     axios

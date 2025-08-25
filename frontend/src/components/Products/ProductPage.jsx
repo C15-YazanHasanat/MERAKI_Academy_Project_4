@@ -4,7 +4,6 @@ import axios from "axios";
 import {
   Grid,
   Card,
-  CardContent,
   CardMedia,
   Typography,
   CircularProgress,
@@ -16,7 +15,7 @@ import "./Product.css";
 
 const ProductPage = () => {
   const { id } = useParams();
-
+  const [cartItems,setCartItems]=useState([])
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState("");

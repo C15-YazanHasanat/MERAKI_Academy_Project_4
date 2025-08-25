@@ -10,13 +10,11 @@ import Register from "./components/auth/Register";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import Navbar from "./components/auth/Navbar";
 import CategoryList from "./components/categories/CategoryList";
-import ChatPage from "./components/chatPage/ChatPage";
 import Account from "./components/auth/Account";
 import AboutUS from "./components/TobBAr files/about";
 import Blog from "./components/TobBAr files/Blog";
 import ContactUs from "./components/TobBAr files/ContactUs";
 import CategoryPage from "./components/categories/CategoryPage";
-import BottomBar from "./components/auth/BottomBar";
 import Checkout from "./components/Checkout/Checkout";
 import GetAddress from "./components/Checkout/GetAddress";
 
@@ -35,7 +33,6 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/chatpage" element={<ChatPage/>}/>
         <Route path="/account" element={<Account/>}/>
         <Route path="/about" element={<AboutUS/>}/>
         <Route path="/blog" element={<Blog/>}/>
