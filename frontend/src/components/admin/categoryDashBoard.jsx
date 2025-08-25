@@ -6,12 +6,16 @@ import {
   Button,
   Typography,
   Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const CategoryDashBoard = () => {
   const token = useSelector((state) => state.auth.token);
-
+  const categories = useSelector((state) => state.categories.items);
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -20,21 +24,19 @@ const CategoryDashBoard = () => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [message, setMessage] = useState("");
+  const [selectedCategoryToDelete, setSelectedCategryToDelete] = useState("");
 
-  // 🟢 تغيير القيم
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  // 🟢 تغيير الصورة (مع preview)
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
     setPreview(URL.createObjectURL(file));
   };
 
-  // 🟢 رفع الصورة إلى Cloudinary
   const uploadImage = () => {
     const data = new FormData();
     data.append("file", image);
@@ -46,7 +48,6 @@ const CategoryDashBoard = () => {
       .then((res) => res.data.secure_url);
   };
 
-  // 🟢 إضافة الكاتيجوري
   const handleAddCategory = (e) => {
     e.preventDefault();
 
@@ -72,6 +73,28 @@ const CategoryDashBoard = () => {
       .catch((err) => {
         console.error(err);
         setMessage("Failed to add category");
+      });
+  };
+
+  //!!!=====delet category=======
+  const handleDeleteCategory = (e) => {
+    e.preventDefault();
+    if (!selectedCategoryToDelete) {
+      setMessage("Please select a category to delete");
+      return;
+    }
+
+    axios
+      .delete(`http://localhost:5000/category/${selectedCategoryToDelete}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        setMessage("Category deleted successfully!");
+        setSelectedCategryToDelete("");
+      })
+      .catch((err) => {
+        console.error(err);
+        setMessage("Failed to delete category");
       });
   };
 
@@ -126,7 +149,38 @@ const CategoryDashBoard = () => {
           Add Category
         </Button>
       </Box>
-
+      <Box
+        component="form"
+        onSubmit={handleDeleteCategory}
+        sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+      >
+        <FormControl fullWidth>
+          <InputLabel>Select Product to Delete</InputLabel>
+          <Select
+            value={selectedCategoryToDelete}
+            onChange={(e) => setSelectedCategryToDelete(e.target.value)}
+            required
+          >
+            {categories.map((category) => (
+              <MenuItem key={category._id} value={category._id}>
+                {category.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Button
+          type="submit"
+          variant="contained"
+          color="error"
+          sx={{
+            width: "250px",
+            textAlign: "center",
+            margin: "auto",
+          }}
+        >
+          Delete Category
+        </Button>
+      </Box>
       {message && (
         <Typography color="secondary" mt={2}>
           {message}

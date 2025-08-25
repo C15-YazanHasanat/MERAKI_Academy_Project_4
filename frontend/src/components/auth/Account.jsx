@@ -46,7 +46,6 @@ const Account = () => {
     getAllOrders();
     getUser();
   }, []);
-  console.log(orders);
 
   return (
     <Box sx={{ padding: 4 }}>

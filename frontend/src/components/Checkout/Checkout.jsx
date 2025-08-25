@@ -28,7 +28,6 @@ const stripePromise = loadStripe(
 const Checkout = () => {
   const dispatch = useDispatch();
   const [cartItems, setCartItems] = useState([]);
-  console.log(cartItems);
   const location = useSelector((state) => {
     return state.location.location;
   });

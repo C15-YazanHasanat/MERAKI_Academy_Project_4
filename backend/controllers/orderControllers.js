@@ -39,20 +39,6 @@ const createOrder = (req, res) => {
     )
     .catch((err) => res.status(500).json({ message: err.message }));
 };
-
-// Get all orders for logged in user
-const getOrders = (req, res) => {
-  const userId = req.user.userId;
-
-  OrderModel.find({ user: userId })
-    .populate("products.product", "name price images")
-    .then((orders) => {
-      if (!orders.length)
-        return res.status(404).json({ message: "No orders found" });
-      res.json(orders);
-    })
-    .catch((err) => res.status(500).json({ message: err.message }));
-};
 //!======get my orders========
 const getMyOrders = (req, res) => {
   const userId = req.user.userId;
@@ -67,10 +53,27 @@ const getMyOrders = (req, res) => {
       res.status(200).json({ success: true, orders });
     })
     .catch((err) =>
-      res.status(500).json({ success: false, message: "Server Error", err: err.message })
+      res
+        .status(500)
+        .json({ success: false, message: "Server Error", err: err.message })
     );
 };
-
+//!!======get all order=====
+const getAllOrders = (req, res) => {
+  OrderModel.find()
+    .then((orders) => {
+      if (!orders.length)
+        return res
+          .status(404)
+          .json({ success: false, message: "No orders found", orders: [] });
+      res.status(200).json({ success: true, orders });
+    })
+    .catch((err) =>
+      res
+        .status(500)
+        .json({ success: false, message: "Server Error", err: err.message })
+    );
+};
 
 // Update order status (Admin only)
 const updateOrderStatus = (req, res) => {
@@ -88,4 +91,4 @@ const updateOrderStatus = (req, res) => {
     .catch((err) => res.status(500).json({ message: err.message }));
 };
 
-module.exports = { createOrder, getOrders, updateOrderStatus,getMyOrders };
+module.exports = { createOrder, getAllOrders, updateOrderStatus, getMyOrders };

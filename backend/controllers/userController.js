@@ -115,8 +115,36 @@ const getCurrentUser = (req, res) => {
         .json({ success: false, message: "Server Error", err: err.message });
     });
 };
+
+//!!=========get all users=====
+const getAllUsers = (req, res) => {
+  usersModel
+    .find()
+    .then((users) => {
+      if (users.length > 0) {
+        res.status(200).json({
+          message: "all users",
+          success: true,
+          users: users,
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: `No users Yet`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
 module.exports = {
   register,
   login,
   getCurrentUser,
+  getAllUsers,
 };

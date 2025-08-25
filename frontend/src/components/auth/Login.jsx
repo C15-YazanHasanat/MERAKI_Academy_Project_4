@@ -27,9 +27,7 @@ const login = async (e) => {
         email,
         password,
       });
-      if (result.data) {
-        console.log(result.data);
-        
+      if (result.data) {        
         setMessage(""); 
         dispatch(setLogin(result.data.token))
         dispatch(setUserId(result.data.userId))

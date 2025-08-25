@@ -26,7 +26,6 @@ const Navbar = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const token = useSelector((state) => state.auth.token);
   const role = useSelector((state) => state.auth.role);
-  console.log(role);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

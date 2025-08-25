@@ -60,7 +60,6 @@ const ProductDashBoard = () => {
     return Promise.all(uploaders);
   };
 
-  // 🟢 إضافة المنتج
   const handleAddProduct = (e) => {
     e.preventDefault();
 
@@ -236,7 +235,7 @@ const ProductDashBoard = () => {
           sx={{
             width: "250px",
             textAlign: "center",
-            margin: "auto", // هذا يخلي البوتون في وسط الـ Box
+            margin: "auto", 
           }}
         >
           Delete Product

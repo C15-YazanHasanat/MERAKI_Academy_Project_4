@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   createOrder,
-  getOrders,
+  getAllOrders,
   updateOrderStatus,
   getMyOrders,
 } = require("../controllers/orderControllers");
@@ -15,7 +15,7 @@ orderRouter.use(authentication);
 
 orderRouter.post("/", createOrder);
 //path==>http://localhost:5000/order
-orderRouter.get("/", getOrders);
+orderRouter.get("/", getAllOrders);
 //path==>http://localhost:5000/order
 orderRouter.get("/myorders", getMyOrders);
 //path==>http://localhost:5000/order/myorders
