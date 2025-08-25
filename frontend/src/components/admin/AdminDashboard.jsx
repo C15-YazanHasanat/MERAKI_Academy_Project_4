@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Paper, Box, Button, Typography } from "@mui/material";
 import ProductDashBoard from "./producatDashboard";
+import CategoryDashBoard from "./categoryDashBoard";
 
 
 const AdminDashboard = () => {
@@ -36,10 +37,7 @@ const AdminDashboard = () => {
 
       <Box>
         {activeTab === "products" && <ProductDashBoard/>}
-        {activeTab === "categories" && (
-          <Typography>Category Dashboard will be here</Typography>
-          
-        )}
+        {activeTab === "categories" && <CategoryDashBoard/>}
         {activeTab === "info" && (
           <Typography>Info Panel will be here</Typography>
         )}

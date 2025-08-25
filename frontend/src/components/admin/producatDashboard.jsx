@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 const ProductDashBoard = () => {
   const token = useSelector((state) => state.auth.token);
   const categories = useSelector((state) => state.categories.items);
-
+  const products = useSelector((state) => state.product.items);
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -31,7 +31,7 @@ const ProductDashBoard = () => {
   const [images, setImages] = useState([]);
   const [preview, setPreview] = useState([]);
   const [message, setMessage] = useState("");
-
+  const [selectedProductToDelete, setSelectedProductToDelete] = useState("");
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm({
@@ -94,6 +94,26 @@ const ProductDashBoard = () => {
       });
   };
 
+  const handleDeleteProduct = (e) => {
+    e.preventDefault();
+    if (!selectedProductToDelete) {
+      setMessage("Please select a product to delete");
+      return;
+    }
+
+    axios
+      .delete(`http://localhost:5000/products/${selectedProductToDelete}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        setMessage("Product deleted successfully!");
+        setSelectedProductToDelete("");
+      })
+      .catch((err) => {
+        console.error(err);
+        setMessage("Failed to delete product");
+      });
+  };
   return (
     <Paper sx={{ p: 4, maxWidth: 700, margin: "auto", mt: 4 }}>
       <Typography variant="h4" mb={3}>
@@ -186,6 +206,40 @@ const ProductDashBoard = () => {
 
         <Button type="submit" variant="contained" color="primary">
           Add Product
+        </Button>
+      </Box>
+      <br />
+      {/* Delete Product Form */}
+      <Box
+        component="form"
+        onSubmit={handleDeleteProduct}
+        sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+      >
+        <FormControl fullWidth>
+          <InputLabel>Select Product to Delete</InputLabel>
+          <Select
+            value={selectedProductToDelete}
+            onChange={(e) => setSelectedProductToDelete(e.target.value)}
+            required
+          >
+            {products.map((product) => (
+              <MenuItem key={product._id} value={product._id}>
+                {product.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Button
+          type="submit"
+          variant="contained"
+          color="error"
+          sx={{
+            width: "250px",
+            textAlign: "center",
+            margin: "auto", // هذا يخلي البوتون في وسط الـ Box
+          }}
+        >
+          Delete Product
         </Button>
       </Box>
       {message && (
