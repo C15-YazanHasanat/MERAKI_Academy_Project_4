@@ -5,11 +5,15 @@ import {
   Box,
   Typography,
   Paper,
-  Divider,
   List,
   ListItem,
   ListItemText,
-  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 const Account = () => {
   const [user, setUser] = useState({});
@@ -84,49 +88,49 @@ const Account = () => {
       {orders.length === 0 ? (
         <Typography>No orders found.</Typography>
       ) : (
-        orders.map((order, i) => (
-          <Paper
-            key={i}
-            sx={{
-              padding: 2,
-              marginY: 1,
-              display: "flex",
-              flexDirection: "row",
-              gap: 2,
-              backgroundColor: "rgba(190, 177, 179, 0.87)",
-            }}
-          >
-            <Typography>
-              <span style={{ fontWeight: "bold" }}>NAME :</span>{" "}
-              {order.customerName}
-            </Typography>
-
-            <Typography>
-              <span style={{ fontWeight: "bold" }}>PHONE :</span>{" "}
-              {order.customerPhone}
-            </Typography>
-
-            <Typography>
-              <span style={{ fontWeight: "bold" }}>NEAREST  LOCATION :</span>{" "}
-              {order.address}
-            </Typography>
-
-            <Typography>
-              <span style={{ fontWeight: "bold" }}>TOTAL PRICE :</span>{" "}
-              {order.totalPrice} $
-            </Typography>
-
-            <Typography>
-              <span style={{ fontWeight: "bold" }}>PAY METHOD :</span>{" "}
-              {order.paymentMethod}
-            </Typography>
-            <Typography><span style={{ fontWeight: "bold" }}>Number Of Products : </span>{order.products.length}</Typography>
-            <Typography>
-              <span style={{ fontWeight: "bold" }}>STATUS :</span>
-              <span style={{ color: "green" }}> {order.status}</span>
-            </Typography>
-          </Paper>
-        ))
+        <TableContainer
+          component={Paper}
+          sx={{ width: "1400px", textAlign: "center" }}
+        >
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>NAME</TableCell>
+                <TableCell>PHONE</TableCell>
+                <TableCell>NEAREST LOCATION</TableCell>
+                <TableCell>TOTAL PRICE ($)</TableCell>
+                <TableCell>PAY METHOD</TableCell>
+                <TableCell>Number Of Products</TableCell>
+                <TableCell>STATUS</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders.map((order) => (
+                <TableRow key={order._id}>
+                  <TableCell sx={{ borderRight: "1px solid gray" }}>
+                    {order.customerName}
+                  </TableCell>
+                  <TableCell sx={{ borderRight: "1px solid gray" }}>
+                    {order.customerPhone}
+                  </TableCell>
+                  <TableCell sx={{ borderRight: "1px solid gray" }}>
+                    {order.address}
+                  </TableCell>
+                  <TableCell sx={{ borderRight: "1px solid gray" }}>
+                    {order.totalPrice}
+                  </TableCell>
+                  <TableCell sx={{ borderRight: "1px solid gray" }}>
+                    {order.paymentMethod}
+                  </TableCell>
+                  <TableCell sx={{ borderRight: "1px solid gray" }}>
+                    {order.products.length}
+                  </TableCell>
+                  <TableCell>{order.status}</TableCell>{" "}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </Box>
   );

@@ -149,6 +149,7 @@ const CategoryDashBoard = () => {
           Add Category
         </Button>
       </Box>
+      <br/>
       <Box
         component="form"
         onSubmit={handleDeleteCategory}

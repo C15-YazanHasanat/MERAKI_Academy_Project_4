@@ -18,7 +18,7 @@ const Info = () => {
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
   const token = useSelector((state) => state.auth.token);
-const categories=useSelector((state)=>state.categories.items)
+const category=useSelector((state)=>state.categories.items)
   //!!======== Get all users=========
   const getAllUsers = () => {
     axios
@@ -105,15 +105,15 @@ const valueFormatter = (value) => `${value}mm`;
         </Table>
       </TableContainer>
       <BarChart
-      dataset={categories}
+      dataset={category}
       xAxis={[
         {
           scaleType: 'band',
           dataKey: 'category',
           valueFormatter: (category, context) =>
             context.location === 'tick'
-              ? `${category.name.slice(0, 3)} \n2023`
-              : `${category.name} 2023`,
+              ? `${name.slice(0, 3)} \nCategory`
+              : `${name} Category`,
           height: 40,
         },
       ]}
