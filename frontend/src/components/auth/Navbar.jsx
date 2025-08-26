@@ -187,15 +187,7 @@ const Navbar = () => {
         )}
 
         <div className="contact">
-          QUESTIONS?{" "}
-          <span
-            className="chat-us"
-            onClick={() => {
-              navigate("/chatpage");
-            }}
-          >
-            Chat US <FaComment />
-          </span>
+          QUESTIONS? Call Us: <span className="chat-us"> +962 7 1234 5678</span>
         </div>
       </nav>
     </div>

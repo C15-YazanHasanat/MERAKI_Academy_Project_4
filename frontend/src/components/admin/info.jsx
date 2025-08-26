@@ -13,12 +13,12 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import { BarChart } from '@mui/x-charts/BarChart';
+import { BarChart } from "@mui/x-charts/BarChart";
 const Info = () => {
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
   const token = useSelector((state) => state.auth.token);
-const category=useSelector((state)=>state.categories.items)
+  const category = useSelector((state) => state.categories.items);
   //!!======== Get all users=========
   const getAllUsers = () => {
     axios
@@ -40,13 +40,6 @@ const category=useSelector((state)=>state.categories.items)
     getAllUsers();
     getAllOrders();
   }, []);
-//!!==================
-const otherSetting = {
-  height: 300,
-  yAxis: [{ label: 'sales ($)', width: 60 }],
-  grid: { horizontal: true },
-};
-const valueFormatter = (value) => `${value}mm`;
   return (
     <Box p={4}>
       {/* Users Table */}
@@ -104,22 +97,6 @@ const valueFormatter = (value) => `${value}mm`;
           </TableBody>
         </Table>
       </TableContainer>
-      <BarChart
-      dataset={category}
-      xAxis={[
-        {
-          scaleType: 'band',
-          dataKey: 'category',
-          valueFormatter: (category, context) =>
-            context.location === 'tick'
-              ? `${name.slice(0, 3)} \nCategory`
-              : `${name} Category`,
-          height: 40,
-        },
-      ]}
-      series={[{ dataKey: 'sales', label: 'sales $', valueFormatter }]}
-      {...otherSetting}
-    />
     </Box>
   );
 };

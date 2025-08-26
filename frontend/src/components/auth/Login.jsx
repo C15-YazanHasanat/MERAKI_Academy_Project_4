@@ -1,6 +1,6 @@
-import { setLogin, setUserId,setUserName,setRole } from "../redux/authSlice";
+import { setLogin, setUserId, setUserName, setRole } from "../redux/authSlice";
 import React, { useState } from "react";
-import './Register.css';
+import "./Register.css";
 
 import { TextField, Button, Paper, Typography, Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,36 +8,34 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
-  const cartItems=useSelector((state)=>{
-    return state.cart.items
-  })
-  
-const login = async (e) => {
-    
+  const cartItems = useSelector((state) => {
+    return state.cart.items;
+  });
+
+  const login = async (e) => {
     e.preventDefault();
     try {
       const result = await axios.post("http://localhost:5000/users/login", {
         email,
         password,
       });
-      if (result.data) {        
-        setMessage(""); 
-        dispatch(setLogin(result.data.token))
-        dispatch(setUserId(result.data.userId))
-        dispatch(setUserName(result.data.firstName))
-        dispatch(setRole(result.data.role))
+      if (result.data) {
+        setMessage("");
+        dispatch(setLogin(result.data.token));
+        dispatch(setUserId(result.data.userId));
+        dispatch(setUserName(result.data.firstName));
+        dispatch(setRole(result.data.role));
         navigate("/");
       } else throw Error;
     } catch (error) {
-        console.log(error);
-        
+      console.log(error);
+
       if (error.response && error.response.data) {
         return setMessage(error.response.data.message);
       }
@@ -46,8 +44,7 @@ const login = async (e) => {
   };
   return (
     <Box
-    className="fade-in"
-
+      className="fade-in"
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -68,7 +65,7 @@ const login = async (e) => {
             margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            slotProps={{ htmlInput: { 'data-testid': '…' } }}
+            slotProps={{ htmlInput: { "data-testid": "…" } }}
           />
           <TextField
             label="Password"
@@ -92,13 +89,15 @@ const login = async (e) => {
           ? message && <div className="SuccessMessage">{message}</div>
           : message && <div className="ErrorMessage">{message}</div>}
 
-        <Typography
-          variant="body2"
-          align="center"
-          sx={{ marginTop: 2, cursor: "pointer", color: "#162be8fe" }}
-          onClick={() => navigate("/register")}
-        >
-          Don't have an account? Register
+        <Typography variant="body2" align="center" sx={{ marginTop: 2 }}>
+          Don't have an account?{" "}
+          <Typography
+            component="span"
+            sx={{ marginTop: 2, cursor: "pointer", color: "#162be8fe" }}
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </Typography>
         </Typography>
       </Paper>
     </Box>

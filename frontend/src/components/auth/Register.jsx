@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { TextField, Button, Paper, Typography, Box } from "@mui/material";
-import './Register.css';
+import "./Register.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -33,21 +33,19 @@ const Register = () => {
         setStatus(true);
         setMessage(res.data.message);
         console.log(res.data);
-        
-        
       })
       .catch((err) => {
         setStatus(false);
-      if (err.response && err.response.data) {
-        return setMessage(err.response.data.message);
-      }
-      setMessage("Error happened while register, please try again");
+        if (err.response && err.response.data) {
+          return setMessage(err.response.data.message);
+        }
+        setMessage("Error happened while register, please try again");
       });
   };
 
   return (
     <Box
-    className="fade-in"
+      className="fade-in"
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -119,14 +117,15 @@ const Register = () => {
         {status
           ? message && <div className="SuccessMessage">{message}</div>
           : message && <div className="ErrorMessage">{message}</div>}
-
-        <Typography
-          variant="body2"
-          align="center"
-          sx={{ marginTop: 2, cursor: "pointer", color: "#162be8fe" }}
-          onClick={() => navigate("/login")}
-        >
-          Already have an account? Login
+        <Typography variant="body2" align="center" sx={{ marginTop: 2 }}>
+          Already have an account?{" "}
+          <Typography
+            component="span"
+            sx={{ marginTop: 2, cursor: "pointer", color: "#162be8fe" }}
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </Typography>
         </Typography>
       </Paper>
     </Box>
