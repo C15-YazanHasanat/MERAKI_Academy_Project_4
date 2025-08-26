@@ -72,9 +72,7 @@ Now app ready to use
 
 ## 🎈 Usage <a name="usage"></a>
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-Ex.
+How can you use the site?
 
 - Browse products without registering.  
 
@@ -85,7 +83,8 @@ Ex.
   <img width="150px" height="100px" src="./frontend/src/assets/images/home.png" alt="Project home">
 
 - Click **Add to Cart** to add products to your cart (requires account registration) 
- <img width="150px" height="100px" src="./frontend/src/assets/images/addCart.png" alt="Project cart">
+
+  <img width="150px" height="100px" src="./frontend/src/assets/images/addCart.png" alt="Project cart">
 
 - Checkout and Payment: Complete your purchase using the checkout page.  
 
