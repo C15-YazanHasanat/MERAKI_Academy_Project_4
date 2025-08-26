@@ -85,7 +85,7 @@ Ex.
   <img width="150px" height="100px" src="./frontend/src/assets/images/home.png" alt="Project home">
 
 - Click **Add to Cart** to add products to your cart (requires account registration) 
-<img width="150px" height="100px" src="./frontend/src/assets/images/addCart.png" alt="Project cart">
+ <img width="150px" height="100px" src="./frontend/src/assets/images/addCart.png" alt="Project cart">
 
 - Checkout and Payment: Complete your purchase using the checkout page.  
 
