@@ -1,6 +1,6 @@
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
-import "./Home.css";
+import "./home.css";
 import { useNavigate } from "react-router-dom";
 const CategorySlider = () => {
   const category = useSelector((state) => {
