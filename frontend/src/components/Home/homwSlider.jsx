@@ -5,7 +5,7 @@ import slide2 from "../../assets/images/pc.png";
 import slide3 from "../../assets/images/unname.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./Home.css";
+import "./home.css";
 
 const Home = () => {
   const slides = [
