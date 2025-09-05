@@ -60,7 +60,7 @@ const CategoryDashBoard = () => {
       .then((imageUrl) => {
         const categoryData = { ...form, image: imageUrl };
 
-        return axios.post("http://localhost:5000/category", categoryData, {
+        return axios.post("https://meraki-academy-project-4-ue16.onrender.com/category", categoryData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       })
@@ -85,7 +85,7 @@ const CategoryDashBoard = () => {
     }
 
     axios
-      .delete(`http://localhost:5000/category/${selectedCategoryToDelete}`, {
+      .delete(`https://meraki-academy-project-4-ue16.onrender.com/category/${selectedCategoryToDelete}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {

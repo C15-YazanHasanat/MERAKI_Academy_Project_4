@@ -31,7 +31,7 @@ const CategoryPage = () => {
     setLoading(true);
     setProducts([]);
     axios
-      .get(`http://localhost:5000/products/category/${categoryId}`)
+      .get(`https://meraki-academy-project-4-ue16.onrender.com/products/category/${categoryId}`)
       .then((res) => {
         setProducts(res.data);
         setFilteredProducts(res.data);

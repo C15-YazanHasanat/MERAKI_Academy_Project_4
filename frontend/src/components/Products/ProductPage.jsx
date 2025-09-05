@@ -27,7 +27,7 @@ const ProductPage = () => {
   //!==========get all cart==========
 const getAllCarts = () => {
     axios
-      .get("http://localhost:5000/carts", {
+      .get("https://meraki-academy-project-4-ue16.onrender.com/carts", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -48,7 +48,7 @@ const fetchProductById = (productId) => {
   setLoading(true);
 
   axios
-    .get(`http://localhost:5000/products/${productId}`)
+    .get(`https://meraki-academy-project-4-ue16.onrender.com/products/${productId}`)
     .then((res) => {
       setProduct(res.data);
 
@@ -90,7 +90,7 @@ const fetchProductById = (productId) => {
     setMessageCart(null);
     axios
       .post(
-        "http://localhost:5000/carts/add",
+        "https://meraki-academy-project-4-ue16.onrender.com/carts/add",
         { productId: id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       )

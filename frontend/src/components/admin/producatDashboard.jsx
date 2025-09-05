@@ -70,7 +70,7 @@ const ProductDashBoard = () => {
           images: imageUrls,
         };
 
-        return axios.post("http://localhost:5000/products", productData, {
+        return axios.post("https://meraki-academy-project-4-ue16.onrender.com/products", productData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       })
@@ -101,7 +101,7 @@ const ProductDashBoard = () => {
     }
 
     axios
-      .delete(`http://localhost:5000/products/${selectedProductToDelete}`, {
+      .delete(`https://meraki-academy-project-4-ue16.onrender.com/products/${selectedProductToDelete}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {

@@ -21,7 +21,7 @@ const Register = () => {
   const reg = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/users/register", {
+      .post("https://meraki-academy-project-4-ue16.onrender.com/users/register", {
         firstName,
         lastName,
         age,

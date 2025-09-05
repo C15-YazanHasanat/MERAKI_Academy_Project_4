@@ -7,7 +7,7 @@ const CategoryList = () => {
   const categories = useSelector((state) => state.categories.items);
  
   const getAllCategories=()=>{
-    axios.get("http://localhost:5000/category").then((res)=>{
+    axios.get("https://meraki-academy-project-4-ue16.onrender.com/category").then((res)=>{
       
         dispatch(setCategories(res.data))
     }).catch((err)=>{

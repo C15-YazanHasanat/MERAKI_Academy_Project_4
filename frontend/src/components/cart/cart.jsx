@@ -25,7 +25,7 @@ const Cart = () => {
   //!=========get all cart===========
   const getAllCarts = () => {
     axios
-      .get("http://localhost:5000/carts", {
+      .get("https://meraki-academy-project-4-ue16.onrender.com/carts", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -48,7 +48,7 @@ const Cart = () => {
 
   const deleteCart = (productId) => {
     axios
-      .delete("http://localhost:5000/carts/delete", {
+      .delete("https://meraki-academy-project-4-ue16.onrender.com/carts/delete", {
         headers: { Authorization: `Bearer ${token}` },
         data: { productId },
       })
@@ -75,7 +75,7 @@ const Cart = () => {
     if (quantity < 1) return;
     axios
       .put(
-        "http://localhost:5000/carts/update",
+        "https://meraki-academy-project-4-ue16.onrender.com/carts/update",
         { productId, quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       )

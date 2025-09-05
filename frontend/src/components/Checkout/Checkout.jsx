@@ -54,7 +54,7 @@ const Checkout = () => {
   //!==========get all cart==========
   const getAllCarts = () => {
     axios
-      .get("http://localhost:5000/carts", {
+      .get("https://meraki-academy-project-4-ue16.onrender.com/carts", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -74,7 +74,7 @@ const Checkout = () => {
   //!=========clear all cart==========
   const clearAllCart = () => {
     axios
-      .delete("http://localhost:5000/carts/clear", {
+      .delete("https://meraki-academy-project-4-ue16.onrender.com/carts/clear", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -88,7 +88,7 @@ const Checkout = () => {
   const [clientSecret, setClientSecret] = useState("");
   const GetClientSecret = () => {
     axios
-      .post("http://localhost:5000/api/create-payment-intent", {
+      .post("https://meraki-academy-project-4-ue16.onrender.com/api/create-payment-intent", {
         amount: totalPrice * 100,
       })
       .then((res) => {

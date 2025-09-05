@@ -22,7 +22,7 @@ const Info = () => {
   //!!======== Get all users=========
   const getAllUsers = () => {
     axios
-      .get("http://localhost:5000/users/allUsers")
+      .get("https://meraki-academy-project-4-ue16.onrender.com/users/allUsers")
       .then((res) => setUsers(res.data.users))
       .catch((err) => console.log(err));
   };
@@ -30,7 +30,7 @@ const Info = () => {
   //!======= Get all orders===========
   const getAllOrders = () => {
     axios
-      .get("http://localhost:5000/order", {
+      .get("https://meraki-academy-project-4-ue16.onrender.com/order", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setOrders(res.data.orders))

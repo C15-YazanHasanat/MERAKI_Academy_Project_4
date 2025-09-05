@@ -23,7 +23,7 @@ const Account = () => {
   //!!=======Get user==========
   const getUser = () => {
     axios
-      .get("http://localhost:5000/users/me", {
+      .get("https://meraki-academy-project-4-ue16.onrender.com/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -36,7 +36,7 @@ const Account = () => {
   //!!===========get order=========
   const getAllOrders = () => {
     axios
-      .get("http://localhost:5000/order/myorders", {
+      .get("https://meraki-academy-project-4-ue16.onrender.com/order/myorders", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

@@ -33,7 +33,7 @@ export default function PaymentPage() {
   //!=========clear all cart==========
   const clearAllCart = () => {
     axios
-      .delete("http://localhost:5000/carts/clear", {
+      .delete("https://meraki-academy-project-4-ue16.onrender.com/carts/clear", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -80,7 +80,7 @@ export default function PaymentPage() {
 
           axios
             .post(
-              "http://localhost:5000/order",
+              "https://meraki-academy-project-4-ue16.onrender.com/order",
               {
                 products: productsForOrder,
                 address: location.nearestLocation,

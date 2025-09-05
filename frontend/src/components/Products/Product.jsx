@@ -12,7 +12,7 @@ const Product = () => {
   const products = useSelector((state) => state.product.items);
   const getAllProduct = () => {
     axios
-      .get(" http://localhost:5000/products")
+      .get("https://meraki-academy-project-4-ue16.onrender.com/products")
       .then((res) => {        
         dispatch(setProducts(res.data.product));
       })
