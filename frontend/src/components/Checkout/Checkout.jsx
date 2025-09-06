@@ -246,6 +246,7 @@ const Checkout = () => {
                         payCash();
                       }
                     }}
+                     onTouchEnd={() => payCash()}
                   >
                     pay now
                   </Button>
