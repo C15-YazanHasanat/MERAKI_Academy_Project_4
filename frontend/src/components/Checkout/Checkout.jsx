@@ -120,7 +120,7 @@ const Checkout = () => {
 
     axios
       .post(
-        "http://localhost:5000/order",
+        "https://meraki-academy-project-4-ue16.onrender.com/order",
         {
           products: productsForOrder,
           address: nearestLocation,
