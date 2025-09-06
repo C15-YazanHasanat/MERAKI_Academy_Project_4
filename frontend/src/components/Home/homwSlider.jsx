@@ -1,5 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
+import { Link } from "react-router-dom"; // ✅ استورد Link
 import slide1 from "../../assets/images/playstation2.png";
 import slide2 from "../../assets/images/pc.png";
 import slide3 from "../../assets/images/unname.png";
@@ -33,7 +34,8 @@ const Home = () => {
             <img src={item.src} alt={`Slide ${index + 1}`} />
             <div className="slide-overlay">
               <h2>{item.title}</h2>
-              <a href={item.link} className="shop-btn">Shop Now</a>
+              {/* ✅ استخدم Link بدل a */}
+              <Link to={item.link} className="shop-btn">Shop Now</Link>
             </div>
           </div>
         ))}
