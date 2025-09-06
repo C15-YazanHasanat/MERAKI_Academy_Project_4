@@ -14,17 +14,17 @@ const Home = () => {
     {
       src: slide3,
       title: "Take your laptop",
-      link: "/category/68a05b0f9e80ca53fa8e43ff",
+      link: "/category/68bc1b6712d386234d0b1d6b",
     },
     {
       src: slide2,
       title: "Make your PC",
-      link: "/category/68a05ac59e80ca53fa8e43fb",
+      link: "/category/68bc1b0b12d386234d0b1d60",
     },
     {
       src: slide1,
       title: "Play with entertainment",
-      link: "/category/68a05b039e80ca53fa8e43fd",
+      link: "/category/68bc1b3d12d386234d0b1d67",
     },
   ];
 
