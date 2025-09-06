@@ -2,13 +2,10 @@ import Slider from "react-slick";
 import { useSelector } from "react-redux";
 import "./home.css";
 import { useNavigate } from "react-router-dom";
+
 const CategorySlider = () => {
-  const category = useSelector((state) => {
-    return state.categories.items;
-  });
-  const product = useSelector((state) => {
-    return state.product.items;
-  });
+  const category = useSelector((state) => state.categories.items);
+  const product = useSelector((state) => state.product.items);
 
   const navigate = useNavigate();
 
@@ -27,6 +24,9 @@ const CategorySlider = () => {
     ],
   };
 
+  // إذا لم توجد بيانات، أظهر رسالة Loading
+  if (!category || !product) return <p style={{ textAlign: "center" }}>Loading...</p>;
+
   return (
     <div className="category-slider-container">
       <h3 style={{ textAlign: "center", fontSize: "24px" }}>
@@ -35,22 +35,24 @@ const CategorySlider = () => {
       <br />
       <Slider {...settings}>
         {category.map((item) => {
+          // تحقق من item و item._id قبل استخدامه
+          if (!item || !item._id) return null;
+
+          // استخدم Optional Chaining لتجنب crash
           const count = product.filter(
-            (prod) => prod.category._id === item._id
+            (prod) => prod.category?._id === item._id
           ).length;
 
           return (
             <div
               key={item._id}
               className="category-slide"
-              onClick={() => {
-                navigate(`/category/${item._id}`);
-              }}
+              onClick={() => navigate(`/category/${item._id}`)}
             >
               <div className="category-image-wrapper">
-                <img src={item.image} alt={item.name} />
+                <img src={item.image} alt={item.name || "Category"} />
               </div>
-              <h4>{item.name}</h4>
+              <h4>{item.name || "Unnamed"}</h4>
               <p>{count} items</p>
             </div>
           );
