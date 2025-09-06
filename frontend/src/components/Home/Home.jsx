@@ -23,7 +23,7 @@ const Home = () => {
           alt="offer"
           sx={{ objectFit: "contain",cursor:"pointer" }}
           onClick={()=>{
-            navigate("/category/68a05b0f9e80ca53fa8e43ff")
+            navigate("/category/68bc1b6712d386234d0b1d6b")
           }}
         />
         <CardMedia
@@ -33,7 +33,7 @@ const Home = () => {
           alt="offer"
           sx={{ objectFit: "contain",cursor:"pointer" }}
           onClick={()=>{
-            navigate("/category/68a05b469e80ca53fa8e4405")
+            navigate("/category/68bc1ba912d386234d0b1d73")
           }}
         />
       </Box>
