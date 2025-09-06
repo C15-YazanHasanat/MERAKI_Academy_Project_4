@@ -85,7 +85,7 @@ export default function GetAddress() {
             }}
           >
             <GoogleMapReact
-              bootstrapURLKeys={{ key: "" }}
+              bootstrapURLKeys={{ key: "AIzaSyBMwLSriIi1nEkpz5YTX78wIPdhL8vE-d4" }}
               defaultCenter={defaultProps.center}
               defaultZoom={defaultProps.zoom}
               onClick={handleMapClick}
