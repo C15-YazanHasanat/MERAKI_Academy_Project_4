@@ -22,7 +22,7 @@ const Blog = () => {
         </Typography>
 
         {/* Example blog posts */}
-        <Card sx={{ mb: 3,cursor:"pointer" }} onClick={() => navigate("/category/68a05b0f9e80ca53fa8e43ff")}>
+        <Card sx={{ mb: 3,cursor:"pointer" }} onClick={() => navigate("/category/68bc1b6712d386234d0b1d6b")}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
               Top 5 Laptops for Students in 2025
@@ -35,7 +35,7 @@ const Blog = () => {
           </CardContent>
         </Card>
 
-        <Card sx={{ mb: 3,cursor:"pointer" }} onClick={() => navigate("/category/68a05ac59e80ca53fa8e43fb")}>
+        <Card sx={{ mb: 3,cursor:"pointer" }} onClick={() => navigate("/category/68bc1b0b12d386234d0b1d60")}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
               How to Build Your Own Gaming PC
@@ -49,7 +49,7 @@ const Blog = () => {
 
         <Card
           sx={{ mb: 3, cursor: "pointer" }}
-          onClick={() => navigate("/category/68a05b469e80ca53fa8e4405")}
+          onClick={() => navigate("/category/68bc1ba912d386234d0b1d73")}
         >
           <CardContent>
             <Typography variant="h6" gutterBottom>
