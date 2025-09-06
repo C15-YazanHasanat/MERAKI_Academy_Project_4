@@ -185,10 +185,6 @@ const Navbar = () => {
         ) : (
           <span>Loading categories...</span>
         )}
-
-        <div className="contact">
-          QUESTIONS? Call Us: <span className="chat-us"> +962 7 1234 5678</span>
-        </div>
       </nav>
     </div>
   );
