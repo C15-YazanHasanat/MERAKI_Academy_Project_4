@@ -27,6 +27,7 @@ app.post("/api/create-payment-intent", (req, res) => {
 
 
 
+
 //routers
 const productRouter = require("./routes/productRoute");
 const categoryRouter = require("./routes/CategoryRout");

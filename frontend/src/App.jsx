@@ -18,6 +18,7 @@ import CategoryPage from "./components/categories/CategoryPage";
 import Checkout from "./components/Checkout/Checkout";
 import GetAddress from "./components/Checkout/GetAddress";
 
+
 const App = () => {
   return (
     <div className="App">
